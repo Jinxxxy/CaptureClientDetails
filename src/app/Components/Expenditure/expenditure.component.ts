@@ -5,7 +5,7 @@ import {setDataService} from '../../ServiceLayer/setData';
 import {stringKeyConverters} from '../../HelperMethods/keyToStringConverters'
 import {datadump} from '../../ServiceLayer/dataStore';
 import {Observable} from'rxjs';
-import {_getData} from '../../ServiceLayer/getData.service';
+import {getDataService} from '../../ServiceLayer/getData.service';
 import {Response} from '@angular/http';
 import {dataRequestTemplate} from '../../Models/dataRequest.model';
 
@@ -14,15 +14,14 @@ import {dataRequestTemplate} from '../../Models/dataRequest.model';
   templateUrl: './expenditure.component.html',
   styleUrls: ['./expenditure.component.css',
   './../../Stylesheets/skeleton.css'],
-  providers: [_getData]
-})
+  providers: [getDataService, setDataService]})
 @Injectable()
 export class Expenditure {
   budgetFields: Array<Object> = [];
   clientPartnerJoint: Array<string> = ["Client", "Partner", "Joint"];
   addNew: budgetItemClass = new budgetItemClass();
   _save: setDataService;
-  _get: _getData;  
+  _get: getDataService;  
   _clientId: number = 2000001;
   _clientLoaded: boolean = datadump.clientLoaded;
   payFrequencyList: Array<string> = [];
@@ -100,7 +99,7 @@ export class Expenditure {
     this.budgetFields.length = 0;
     this.budgetFields = datadump.client.expenditure;
   }
-constructor(private __get: _getData, private __save: setDataService)
+constructor(private __get: getDataService, private __save: setDataService)
   {
     this._get = __get;
     this._save = __save

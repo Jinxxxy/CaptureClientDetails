@@ -1,6 +1,6 @@
 <div class="debtFormHolder">
   <div class="debtForm">
-    <h1> {{formTitle}} </h1>
+    <h3> {{formTitle}} </h3>
     <table class="debtTable">
     <tr>
       <th>Name of your Creditor</th>
@@ -17,7 +17,7 @@
       </td>
       <td>
         <select>
-          <option *ngFor="let debtType of debtTypes">{{debtType}}</option>
+          <option *ngFor="let debtType of debtTypes" [selected]="debtType === _debt.type">{{debtType}}</option>
         </select>
       </td>
       <td>
@@ -25,27 +25,31 @@
       </td>
     </tr>
     </table>
-    <h1 class="addNewLabel">Add a new debt</h1>
+    <h3 class="addNewLabel">Add a new debt</h3>
     <table class="addNewDebt">
       <tr>
         <th>Name of your Creditor</th>
         <th>How much is the debt for?</th>
         <th>What kind of debt is this?</th>
+        <th></th>
       </tr>
       <tr>
         <td>
           <input (change)="outputFunc()" type="text" [(ngModel)]="newDebt.creditorName">
         </td>
         <td>      
-         £<input type="number" [(ngModel)]="newDebt.amountOwed">
+         <input type="number" [(ngModel)]="newDebt.totalAmountOwed">
         </td>      
         <td>
-          <select>
+          <select [(ngModel)]="newDebt.type">
                 <option *ngFor="let debtType of debtTypes">{{debtType}}</option>
           </select>
         </td>
+        <td>
+          <input type="button" (click)="addNewDebtItemToList()" value="Add this to the list">
+        </td>
     </table>
-    <input type="button" (click)="addNewDebtItemToList()" value="Add this to the list">
+
     
     
     

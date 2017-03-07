@@ -5,7 +5,7 @@ import {Http, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {datadump} from '../../ServiceLayer/dataStore';
 import {Observable, Subscription} from 'rxjs/Rx';
-import {_getData} from '../../ServiceLayer/getData.service';
+import {getDataService} from '../../ServiceLayer/getData.service';
 import {dataRequestTemplate} from '../../Models/dataRequest.model'
 
 @Component({
@@ -13,7 +13,7 @@ import {dataRequestTemplate} from '../../Models/dataRequest.model'
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css',
   './../../Stylesheets/skeleton.css'],
-  providers:[_getData]
+  providers:[getDataService]
 })
 @Injectable()
 export class Home {
@@ -25,7 +25,7 @@ export class Home {
   loadClientBudget(clientRef: number){
     alert(clientRef)
   }
-  getData: _getData
+  getData: getDataService
   public test(){     
         const reqObject = new dataRequestTemplate("test", 2000001, "income");        
         const resp = this.gd.getRequestString(reqObject);
@@ -57,7 +57,7 @@ export class Home {
       }
     ).subscribe();
   }
-  constructor(private gd: _getData)
+  constructor(private gd: getDataService)
   {
   this.getData = gd;  
   this.test(); 

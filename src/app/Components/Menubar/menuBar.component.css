@@ -8,6 +8,11 @@
 .button{
     display: inline;
     float:left;
+    background-color: black;
+}
+.menu{
+    background-color: black !important;
+    color: lightgrey !important;
 }
 .outputconsole{
     position: fixed;
@@ -15,6 +20,7 @@
     margin-top:0px;
     right:0px;
     float:right;
+    
 }
 .workItem{
     border: 2px solid darkgrey;

@@ -1,4 +1,4 @@
-import {_getData} from '../ServiceLayer/getData.service';
+import {getDataService} from '../ServiceLayer/getData.service';
 import {Http} from '@angular/http'
 import {connectionData} from './ServiceLayerConfig/serverLocationDetails';
 import {Observable, Subscription} from 'rxjs/Rx';

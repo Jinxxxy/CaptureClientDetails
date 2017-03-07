@@ -1,17 +1,17 @@
-import {_getData} from './getData.service';
 import { dataRequestTemplate } from '../Models/dataRequest.model';
 import {Observable} from 'rxjs'
-import {Http} from '@angular/http'
+import {Http, Response} from '@angular/http'
 import {connectionData} from './ServiceLayerConfig/serverLocationDetails'
 import {datadump} from '../ServiceLayer/dataStore';
+import {Injectable} from '@angular/core';
 
 
-var itemNameFolderFinder = {
-    "income":"clientData",
-    "expenditure":"clientData",
-    "UserData": "UserData"
-}
-
+// var itemNameFolderFinder = {
+//     "income":"clientData",
+//     "expenditure":"clientData",
+//     "UserData": "UserData"
+// }
+@Injectable()
 export class setDataService{
     private _http: Http; 
     saveClientData: Function = ((): Observable<Object>=>{
@@ -34,34 +34,4 @@ export class setDataService{
         this._http = __http;
     }
 }
-
-// export var setData = {
-//     saveData: ((jsonObj):Promise<string>=>{
-//         console.log("saveData")
-//         var savePromise: Promise<string> = new Promise((res,rej)=>{
-//             if(jsonObj["frequencyString"] !== undefined){
-//                  delete jsonObj["frequencyString"];
-//             }
-//             var jsonstring = JSON.stringify(jsonObj);
-//             console.log(jsonstring)
-//             var conn = new XMLHttpRequest();
-//             conn.open("POST", "http://localhost:5000?" + jsonstring, true);
-//             conn.onload = (()=>{
-//             res("Data Saved")
-//             })
-//             conn.onerror = (()=>{
-//             rej("Data failed to save")
-//             })
-//             conn.send();
-//         });
-//         return savePromise;        
-//     }),
-//     save: ((objectName: string, objectToReplace: Object): any =>{
-//         console.log("save")
-//         var saveImplementation: Promise<string> = setData.saveData(objectToReplace);
-//         saveImplementation.then((serverResponse)=>{
-//             console.log(serverResponse)            
-//         })
-//     })    
-// }
 export default setDataService;

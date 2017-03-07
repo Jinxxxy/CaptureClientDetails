@@ -8,9 +8,9 @@
 </div>
 <div class="wrapper">
     <div *ngFor="let i of linksMenu">
-        <a class="button" *ngIf="_datadump['clientLoaded'] || i.name == 'Home'" [routerLink]="i.path">{{i.name}}</a>
+        <a class="button menu" *ngIf="_datadump['clientLoaded'] || i.name == 'Home'" [routerLink]="i.path">{{i.name}}</a>
     </div> 
 </div>
 <div class="outputconsole">
-      {{outputFunc()}}
+      {{outputFunc() | json}}
 </div>

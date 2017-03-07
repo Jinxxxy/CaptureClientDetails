@@ -1,24 +1,26 @@
 import {Component} from '@angular/core';
 import {budgetItemClass} from '../../Models/budgetItem.model';
 import {generalHelpers} from '../../HelperMethods/GeneralHelper';
-import {_getData} from '../../ServiceLayer/getData.service';
+import {getDataService} from '../../ServiceLayer/getData.service';
 import {setDataService} from '../../ServiceLayer/setData';
 import {Observable} from 'rxjs'
 import {dataRequestTemplate} from '../../Models/dataRequest.model'
 import {Response} from '@angular/http'
 import {datadump} from '../../ServiceLayer/dataStore';
 import {stringKeyConverters} from '../../HelperMethods/keyToStringConverters'
+import {cpjList} from '../../ConfigFiles/clientPartnerOrJoint';
 
 @Component({
   selector: 'incomeForm',
   templateUrl: './income.component.html',
   styleUrls: ['./income.component.css',
   './../../Stylesheets/skeleton.css'],
-  providers: [_getData]
+  providers: [getDataService, setDataService]
 })
 export class Income {
    incomeBudgetFields = datadump.client.income;
    addNew = "";
+   _cpjList = cpjList;
    _save: setDataService;
    jointBudget: boolean = false;
    payFrequencyList = [];
@@ -27,7 +29,7 @@ export class Income {
    _newFrequencyString = "";
    _clientOrPartner = "";
    _newBudgetItem:budgetItemClass = new budgetItemClass();
-   gd: _getData; 
+   gd: getDataService; 
   _clientLoaded: boolean = datadump.clientLoaded;
   removeFromBudgetList(itemIndex: number){
     datadump.client.income.splice(itemIndex, 1);
@@ -157,7 +159,7 @@ export class Income {
     })
     conn.send();
   }
-  constructor(private __getData: _getData, private __save: setDataService)
+  constructor(private __getData: getDataService, private __save: setDataService)
   {    
     this._save = __save;
     this.gd = __getData;

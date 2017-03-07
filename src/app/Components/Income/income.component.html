@@ -1,4 +1,4 @@
-<h1>Income</h1>
+<h3>Income</h3>
 <table class="incomeTable">
     <tr>
         <th>
@@ -22,7 +22,7 @@
             <input type="text" placeholder="Name" [(ngModel)]="bf.name">
         </td>
         <td>
-            £<input type="number" class="u-half-width" [(ngModel)]="incomeBudgetFields[incomeBudgetFields.indexOf(bf)].clientFigure">
+            <input type="number" class="u-half-width" [(ngModel)]="incomeBudgetFields[incomeBudgetFields.indexOf(bf)].clientFigure">
         </td>
         <td>
             <select class="u-half-width" selected="bf.frequencyString" [(ngModel)]="bf.frequencyString" value="bf.clientPartnerOrJoint">
@@ -32,12 +32,9 @@
             </select>
         </td>
         <td>
-            <select [(ngModel)]="bf.clientPartnerOrJoint" value="bf.clientPartnerOrJoint">
-                <option>
-                    Client
-                </option>
-                <option>
-                    Partner
+            <select [(ngModel)]="bf.clientPartnerOrJoint">
+                <option *ngFor="let _opt of _cpjList" [selected]="bf.clientPartnerOrJoint.toLowerCase() === _opt.toLowerCase()">
+                    {{_opt}} - {{bf.clientPartnerOrJoint.toLowerCase() === _opt.toLowerCase()}}
                 </option>
             </select>
         </td>
@@ -88,11 +85,8 @@
         </td>
         <td>
             <select [(ngModel)]="_newBudgetItem.clientPartnerOrJoint">
-                <option>
-                    CLIENT
-                </option>
-                <option>
-                    PARTNER
+                <option *ngFor="let _opt of _cpjList">
+                    {{_opt}}
                 </option>
             </select>
         </td>

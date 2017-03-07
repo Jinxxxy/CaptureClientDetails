@@ -8,7 +8,7 @@ import {Injectable} from '@angular/core';
 //var grt = new getRequestTemplate("tes");
 
 @Injectable()
-export class _getData{
+export class getDataService{
     private _http: Http;
     private processResponseData = (()=>{
         
@@ -38,4 +38,4 @@ export class _getData{
     }
 }
 
-export default _getData;
+export default getDataService;

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Pipe} from '@angular/core';
 import {budgetItemClass} from '../../Models/budgetItem.model';
 import {generalHelpers} from '../../HelperMethods/GeneralHelper'
 import {Router, ROUTER_CONFIGURATION} from '@angular/router'
@@ -6,7 +6,7 @@ import {datadump} from '../../ServiceLayer/dataStore'
 import {Observable} from 'rxjs';
 import {Response} from '@angular/http'
 import {dataRequestTemplate} from '../../Models/dataRequest.model'
-import {_getData} from '../../ServiceLayer/getData.service'
+import {getDataService} from '../../ServiceLayer/getData.service'
 
 
 @Component({
@@ -14,17 +14,19 @@ import {_getData} from '../../ServiceLayer/getData.service'
   templateUrl: './menuBar.component.html',
   styleUrls: ['./menuBar.component.css',
   './../../Stylesheets/skeleton.css'],
-  providers: [_getData]
+  providers: [getDataService]
+  
 })
+
 export class MenuBar {
     private title: string = "Menu Bar";
     private linksMenu = [];
     private userPermissionLevel: number = 5;
-    private gd: _getData;
+    private gd: getDataService;
     private _clientId: number;
     _datadump = datadump;
-    private outputFunc():string{
-    return JSON.stringify(datadump.client, null, "\n");
+    private outputFunc():Object{
+    return datadump.client;
   }
     private filterPermissionList(inputVal: number){
         return inputVal < this.userPermissionLevel;
@@ -63,7 +65,7 @@ export class MenuBar {
         })
         conn.send();
     }
-    constructor(private _gd: _getData){
+    constructor(private _gd: getDataService){
         this.getJson();
         this.gd = _gd;
         console.log(datadump)
