@@ -1,0 +1,141 @@
+{
+  "data": {
+    "personalDetails": {
+      "jointBudget": true
+    },
+    "expenditure": [
+      {
+        "name": "Rent",
+        "order": 1,
+        "defaultValue": 1,
+        "essentialExpenditure": true,
+        "addedByClient": false,
+        "clientFigure": 4447,
+        "frequency": 5,
+        "frequencyString": "Annually"
+      },
+      {
+        "name": "Mortgage",
+        "order": 2,
+        "defaultValue": 1,
+        "essentialExpenditure": true,
+        "addedByClient": false,
+        "clientFigure": 650,
+        "frequency": 4,
+        "frequencyString": "Quarterly"
+      },
+      {
+        "name": "Water",
+        "order": 3,
+        "defaultValue": 1,
+        "essentialExpenditure": true,
+        "addedByClient": false,
+        "clientFigure": 80,
+        "frequency": 4,
+        "frequencyString": "Quarterly"
+      },
+      {
+        "name": "Food",
+        "order": 4,
+        "defaultValue": 1,
+        "essentialExpenditure": true,
+        "addedByClient": false,
+        "clientFigure": 100
+      },
+      {
+        "name": "Fuel",
+        "order": 5,
+        "defaultValue": 1,
+        "essentialExpenditure": true,
+        "addedByClient": false,
+        "clientFigure": 100
+      },
+      {
+        "name": "Car Insurance",
+        "order": 6,
+        "defaultValue": 1,
+        "essentialExpenditure": true,
+        "addedByClient": false,
+        "clientFigure": 100
+      },
+      {
+        "name": "Home Insurance",
+        "order": 7,
+        "defaultValue": 1,
+        "essentialExpenditure": true,
+        "addedByClient": false,
+        "clientFigure": 100
+      },
+      {
+        "name": "Telephone / Mobile / Broadband",
+        "order": 8,
+        "defaultValue": 1,
+        "essentialExpenditure": true,
+        "addedByClient": false,
+        "clientFigure": 100
+      },
+      {
+        "name": "School Dinners",
+        "order": 9,
+        "defaultValue": 1,
+        "essentialExpenditure": true,
+        "addedByClient": false,
+        "clientFigure": 100
+      },
+      {
+        "name": "Childcare",
+        "order": 10,
+        "defaultValue": 1,
+        "essentialExpenditure": true,
+        "addedByClient": false,
+        "clientFigure": 100
+      },
+      {
+        "name": "New Item",
+        "order": 9,
+        "defaultValue": 1,
+        "essential": false,
+        "addedByClient": true,
+        "clientFigure": 500,
+        "clientPartnerOrJoint": null,
+        "frequency": 2,
+        "frequencyString": "4 Weekly"
+      },
+      {
+        "name": "Public Transport",
+        "order": 10,
+        "defaultValue": 1,
+        "essential": false,
+        "addedByClient": true,
+        "clientFigure": 750,
+        "clientPartnerOrJoint": null,
+        "frequency": 5,
+        "frequencyString": "Annually"
+      }
+    ],
+    "debts": [
+        { 
+            "creditorName": "CreditorOne", 
+            "totalAmountOwed": 5000 
+        }, 
+        { 
+            "creditorName": "CreditorTwo", 
+            "totalAmountOwed": 10000 
+        }
+    ],
+    "income": [
+        {
+          "name": "Wages",
+          "Order": 0,
+          "defaultValue": 800,
+          "essential": true,
+          "addedByClient": true,
+          "clientFigure": 1500,
+          "clientPartnerOrJoint": "client",
+          "frequency": 2,
+          "frequencyString": "4 weekly"
+        }
+      ]
+    
+  }
+}

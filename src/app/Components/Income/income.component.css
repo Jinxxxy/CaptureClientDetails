@@ -1,0 +1,16 @@
+.budgetItem{
+    width: 45%;
+    display: inline-table;
+    padding: 2px;
+}
+.budgetItem * {
+    padding: 3px;
+}
+.incomeTable{
+    width: 50%;
+    padding: 1%;
+    border: 1px solid darkgray;
+}
+.spacerRow{
+    height: 5px;
+}

@@ -1,0 +1,26 @@
+.workItem{
+    border: 2px solid darkgrey;
+    border-radius: 5px / 5px;
+
+}
+.u-full-width{
+    width: 50%;
+}
+.budgetItem{
+    width: 45%;
+    display: inline-table;
+    padding: 2px;
+}
+.clientRefOverlay{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    background-color: grey;
+    opacity: 0.75;
+}
+.crom{
+    width: 100%;
+    background-color: grey;
+    opacity: 1;
+}

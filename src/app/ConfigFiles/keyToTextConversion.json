@@ -1,0 +1,24 @@
+{
+    "data":{
+        "income":{
+            "payFrequency":{
+                "0":"Weekly",
+                "1":"Fortnightly",
+                "2":"4 Weekly",
+                "3":"Monthly",
+                "4":"Quarterly",
+                "5":"Annually"
+            }
+        },
+        "userData":{
+            "adminLevel":{
+                "0":"Basic",
+                "1":"Beginner",
+                "2":"Intermediate",
+                "3":"Advanced",
+                "4":"Admin",
+                "5":"SuperUser"
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+<h1>
+    {{title}}
+</h1>
+
+<h6 >Username:</h6><input type="text" readonly class="u-full-width" value="{{_userData.username}}">
+<h6 >Profile:</h6><input type="text" readonly class="u-full-width"value="{{keyToString(_userData.permissionLevel)}}">
+<h6 >First name:</h6><input class="u-full-width" type="text" [(ngModel)]="_userData.firstName" (keypress)="printFullName(_userData.firstName, _userData.lastName)">
+<h6 >Last name:</h6><input class="u-full-width" type="text" [(ngModel)]="_userData.lastName" (keypress)="printFullName(_userData.firstName, _userData.lastName)">
+<input type="button" class="button-primary" value="Save Data" (click)="saveData()">

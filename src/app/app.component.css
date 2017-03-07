@@ -1,0 +1,13 @@
+expenditureForm{
+    width: 75%;
+    float: right;
+    display: inline-table;
+}
+menuBar{
+    display: inline-table;
+    width: 100%;
+}
+router-outlet{
+    width: 75%;
+    left: 12.5%;
+}

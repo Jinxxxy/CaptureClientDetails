@@ -1,0 +1,104 @@
+<h1>Income</h1>
+<table class="incomeTable">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>
+            Every
+        </th>
+        <th>
+            For
+        </th>
+        <th>
+            Get rid?
+        </th>
+    </tr>
+    <tr *ngFor="let bf of incomeBudgetFields">
+        <td>
+            <input type="text" placeholder="Name" [(ngModel)]="bf.name">
+        </td>
+        <td>
+            £<input type="number" class="u-half-width" [(ngModel)]="incomeBudgetFields[incomeBudgetFields.indexOf(bf)].clientFigure">
+        </td>
+        <td>
+            <select class="u-half-width" selected="bf.frequencyString" [(ngModel)]="bf.frequencyString" value="bf.clientPartnerOrJoint">
+                <option class="u-half-width" *ngFor="let opt of payFrequencyList" [selected]="bf.frequencyString === opt">
+                    {{opt}}
+                </option>
+            </select>
+        </td>
+        <td>
+            <select [(ngModel)]="bf.clientPartnerOrJoint" value="bf.clientPartnerOrJoint">
+                <option>
+                    Client
+                </option>
+                <option>
+                    Partner
+                </option>
+            </select>
+        </td>
+        <td>
+            <div *ngIf="bf.addedByClient === true">
+                <input type="button" class="button-primary" value="Delete Item" (click)="removeFromBudgetList(incomeBudgetFields.indexOf(bf))">        
+            </div>
+        </td>
+    </tr>
+    <tr class="spacerRow">        
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr class="spacerRow">        
+        <td>
+            Add a new item: 
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="text" [(ngModel)]="_newBudgetItem.name">
+        </td>
+        <td>
+            <input type="text" [(ngModel)]="_newBudgetItem.clientFigure">
+        </td>
+        <td>
+            <select [(ngModel)]="_newBudgetItem.frequencyString" class="u-full-width"  #freq> 
+                <option *ngFor="let opt of payFrequencyList" placeholder="How often?">
+                {{opt}}
+                </option>
+            </select>
+        </td>
+        <td>
+            <select [(ngModel)]="_newBudgetItem.clientPartnerOrJoint">
+                <option>
+                    CLIENT
+                </option>
+                <option>
+                    PARTNER
+                </option>
+            </select>
+        </td>
+        <td>
+            <input type="button" class="button-primary" value="Add a new item" name="addNewButton" (click)="addNewFunc()">
+        </td>
+    </tr>
+</table>
+<input type="button" class="button-primary" value="Save data" name="saveButton" (click) = "save()">
