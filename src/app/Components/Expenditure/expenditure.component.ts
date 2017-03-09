@@ -73,6 +73,7 @@ export class Expenditure {
       datadump.client.expenditure.push(this.addNew); 
       this.addNew =  new budgetItemClass();  
       console.log() 
+      this._save.saveClientData().subscribe();
     } else {
       alert("Add the name of the item you want to add.")
     }

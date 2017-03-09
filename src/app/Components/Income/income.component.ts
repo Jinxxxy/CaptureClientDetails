@@ -19,7 +19,7 @@ import {cpjList} from '../../ConfigFiles/clientPartnerOrJoint';
 })
 export class Income {
    incomeBudgetFields = datadump.client.income;
-   addNew = "";
+   addNew: budgetItemClass = new budgetItemClass();
    _cpjList = cpjList;
    _save: setDataService;
    jointBudget: boolean = false;
@@ -52,9 +52,10 @@ export class Income {
       temp.order = datadump.client.income.length - 1;
       temp.frequencyString = this._newBudgetItem["frequencyString"];
       temp.frequency = stringKeyConverters.convertFrequencyStringToKey(temp.frequencyString);
-      temp.clientPartnerOrJoint = this._newBudgetItem["clientPartnerOrJoint"].toLocaleLowerCase();   
+      temp.clientPartnerOrJoint = this._newBudgetItem["clientPartnerOrJoint"];
       console.log(datadump.client.income);
       datadump.client.income.push(temp);
+      this._save.saveClientData().subscribe();
       this.loadIncomeData();        
     } else {
       alert("Add the name of the field you want to add.")

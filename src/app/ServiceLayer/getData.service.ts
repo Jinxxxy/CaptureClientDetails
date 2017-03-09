@@ -33,6 +33,7 @@ export class getDataService{
         )
         return getObservable;
     })
+    
     constructor(private __http: Http){
         this._http = __http;
     }

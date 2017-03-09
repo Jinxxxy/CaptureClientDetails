@@ -15,10 +15,17 @@ import {Injectable} from '@angular/core';
 export class setDataService{
     private _http: Http; 
     saveClientData: Function = ((): Observable<Object>=>{
+        var postClientTemplate: dataRequestTemplate = new dataRequestTemplate(
+            "client",
+            datadump.clientReference
+        );
+                
+        postClientTemplate.passedData = datadump.client;
+        console.log(postClientTemplate)
         var returnObservable: Observable<Object> = this._http.post(
             connectionData.baseServerString 
-            + connectionData.serverParameterSeparator, 
-            JSON.stringify(datadump.client));
+            + connectionData.serverParameterSeparator +
+            JSON.stringify(postClientTemplate),"");
         return returnObservable;        
     })
     saveUserData: Function = ((): Observable<Object>=>{

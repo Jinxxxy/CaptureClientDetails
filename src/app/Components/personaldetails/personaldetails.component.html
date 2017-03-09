@@ -1,0 +1,122 @@
+<table>
+    <tr>
+        <th colspan="2">
+            <h3>Who are you?</h3>
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <label>First Name: </label>
+        </td>
+        <td>
+            <input type="text" [(ngModel)]="newClient.firstName">
+        </td>
+
+    </tr>
+        <tr>
+        <td>
+            <label>Middle Name(s): </label>
+        </td>
+        <td>
+            <input type="text" [(ngModel)]="newClient.middleNames">
+        </td>
+    </tr>
+        <tr>
+        <td>
+            <label>Surname: </label>
+        </td>
+        <td>
+            <input type="text" [(ngModel)]="newClient.surname">
+        </td>          
+    </tr>
+    <tr>
+        <td>
+            <label>Date of birth: </label>
+        </td>
+        <td>
+            <input type="date" [(ngModel)]="newClient.dateOfBirth">
+        </td>  
+    </tr>  
+</table>
+<table>  
+    <tr>
+        <th colspan="2">
+            <h3>Phone Numbers?</h3>
+        </th>
+    </tr>    
+    <tr>
+        <td>
+            <label>
+                Home Phone: 
+            </label>
+        </td>
+        <td>
+            <input type="tel" [(ngModel)]="newClient.homePhone">
+        </td>        
+    </tr>
+    <tr>
+        <td>
+            <label>
+                Work Phone:
+            </label>            
+        </td>
+        <td>
+            <input type="tel" [(ngModel)]="newClient.workPhone">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label> Mobile Phone: </label>
+        </td>
+        <td>
+            <input type="tel" [(ngModel)]="newClient.mobilePhone">
+        </td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <th colspan="2">
+            <h3>Address Details: </h3>
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <label>Address Line 1: </label>
+        </td>
+        <td>
+            <input type="text" [(ngModel)]="newClient.addressLine1">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>Address Line 2: </label>
+        </td>
+        <td>
+            <input type="text" [(ngModel)]="newClient.addressLine2">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>Town / City: </label>
+        </td>
+        <td>
+            <input type="text" [(ngModel)]="newClient.townCity">
+        </td>  
+    </tr>
+    <tr>
+        <td>
+            <label>Country: </label>
+        </td>
+        <td>
+            <input type="text" [(ngModel)]="newClient.country">
+        </td>
+    </tr>
+    <tr>        
+        <td>
+            <label>Postcode: </label>
+        </td>
+        <td>
+            <input type="text" [(ngModel)]="newClient.postCode">
+        </td>
+    </tr>
+</table>

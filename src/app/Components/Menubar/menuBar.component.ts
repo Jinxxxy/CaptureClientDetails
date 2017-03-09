@@ -24,6 +24,7 @@ export class MenuBar {
     private userPermissionLevel: number = 5;
     private gd: getDataService;
     private _clientId: number;
+    private _userId: 100001;
     _datadump = datadump;
     private outputFunc():Object{
     return datadump.client;
@@ -33,7 +34,7 @@ export class MenuBar {
     }
     loadClient(clientRef: number){
     var requestObject: dataRequestTemplate = new dataRequestTemplate(
-            "",
+            "client",
             clientRef,
             "income",
             false)
@@ -41,7 +42,8 @@ export class MenuBar {
     incomeRequest.map(
       (returnedObject: Response)=>{
         console.log(returnedObject.json())
-        var parsedObject = returnedObject.json()["data"];
+        var parsedObject = returnedObject.json();
+        console.log(parsedObject)
         datadump.client = parsedObject;
         datadump.clientLoaded = true;
         datadump.clientReference = clientRef;        
@@ -49,25 +51,34 @@ export class MenuBar {
     ).subscribe();
   }
     private getJson(){
-        var conn = new XMLHttpRequest();
-        conn.open("GET", "./app/ConfigFiles/routingLinks.json", true);
-        conn.onload = (()=>{            
-            var JsonConfig = JSON.parse(conn.response)["data"]["routingLinks"];
-            for(var i in JsonConfig){
-                if(JsonConfig[i].permissionLevelRequired <= this.userPermissionLevel)
-                {                    
-                    this.linksMenu.push(JsonConfig[i])
-                }         
+
+        var getRoutingLinksTemplate: dataRequestTemplate = new dataRequestTemplate(
+            "config", "routingLinks"
+        );
+        
+        this.gd.getRequestJSON(getRoutingLinksTemplate).map(
+            (_getRoutes: Response)=>{            
+                var JsonConfig = _getRoutes.json()["data"]["routingLinks"];
+                console.log(JsonConfig)
+                for(var i in JsonConfig){
+                    if(JsonConfig[i].permissionLevelRequired <= this.userPermissionLevel)
+                    {                    
+                        this.linksMenu.push(JsonConfig[i])
+                    }         
+                }
             }
-        })
-        conn.onerror = (()=>{
-            throw "Unable to load config";
-        })
-        conn.send();
+        ).subscribe();
+        // var conn = new XMLHttpRequest();
+        // conn.open("GET", "./app/ConfigFiles/routingLinks.json", true);
+        // conn.onload = ()
+        // conn.onerror = (()=>{
+        //     throw "Unable to load config";
+        // })
+        // conn.send();
     }
     constructor(private _gd: getDataService){
-        this.getJson();
         this.gd = _gd;
+        this.getJson();        
         console.log(datadump)
     }
 }
@@ -83,8 +94,5 @@ var routerHelpers = {
             throw "Unable to load config";
         })
         conn.send();
-    },
-    
-    
-    
+    }
 }

@@ -1,4 +1,4 @@
-import {budgetItemClass} from '../Models/budgetItemClass';
+import {budgetItemClass} from '../Models/budgetItem.model';
 
 export class classObjectConverter{
     public static fillInBlanksOnObject(budgetItem: Object){

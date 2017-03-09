@@ -20,12 +20,11 @@
     margin-top:0px;
     right:0px;
     float:right;
-    
+    display: none;    
 }
 .workItem{
     border: 2px solid darkgrey;
     border-radius: 5px / 5px;
-
 }
 .u-full-width{
     width: 50%;

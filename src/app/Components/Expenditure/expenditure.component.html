@@ -16,20 +16,20 @@
     </tr>
     <tr *ngFor="let bf of budgetFields">
         <td>
-            <input class="u-half-width" type="text" [(ngModel)]="bf.name">
+            <input type="text" [(ngModel)]="bf.name">
         </td>
         <td>
-            £<input class="u-half-width" type="number" (change)="calculateTotal(budgetFields)" [(ngModel)]="bf.clientFigure">
+            <input type="number" (change)="calculateTotal(budgetFields)" [(ngModel)]="bf.clientFigure">
         </td>
         <td>
-            <select class="u-half-width" [(ngModel)]="bf.frequencyString" (change)="bf.frequency = convertFrequencyStringToKey(freq.value)" #freq>
+            <select [(ngModel)]="bf.frequencyString" (change)="bf.frequency = convertFrequencyStringToKey(freq.value)" #freq>
                 <option *ngFor="let opt of payFrequencyList" [selected]="bf.frequencyString === opt">
                     {{opt}}
                 </option>
             </select>
         </td>
         <td>
-            <input type="button" *ngIf="bf.addedByClient" class="u-half-width" class="button-primary" value="Delete Item" (click)="removeFromBudgetList(budgetFields.indexOf(bf))">
+            <input type="button" *ngIf="bf.addedByClient" class="button-primary" value="Delete Item" (click)="removeFromBudgetList(budgetFields.indexOf(bf))">
         </td>
     </tr>
     <tr>
@@ -60,6 +60,5 @@
     </td>
 </tr>
 </table>
-<input type="button" class="button-primary" value="Save the whole list" (click)="save()">
 <div>Total: {{total}}</div>
 

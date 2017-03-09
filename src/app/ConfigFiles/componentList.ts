@@ -6,6 +6,7 @@ import {Home} from '../Components/Home/home.component'
 import {AppComponent} from '../app.component';
 import {Admin} from '../Components/AdminPanel/admin.component'
 import {DebtsComponent} from  '../Components/debts/debts.component'
+import {PersonalDetailsComponent} from '../Components/personaldetails/personaldetails.component'
 export var componentList = {
     allComponents:{
         "expenditure":{
@@ -37,6 +38,12 @@ export var componentList = {
             "name": "homecomponent",
             "path": "/home",
             "visible": true
+        },
+        "personaldetails":{
+            "component": PersonalDetailsComponent,
+            "name": "personaldetailscomponent",
+            "path": "/personaldetails",
+            "visible": true
         }
     },
     linkArray:[
@@ -44,9 +51,10 @@ export var componentList = {
         {path:"expenditure", component:Expenditure},
         {path:"income", component:Income},
         {path:"admin", component: Admin},
-        {path:"debts", component: DebtsComponent}
+        {path:"debts", component: DebtsComponent},
+        {path:"personaldetails", component: PersonalDetailsComponent}
     ],
-    componentArray: [Home, AppComponent, Expenditure, Income, MenuBar, Admin, DebtsComponent]
+    componentArray: [Home, AppComponent, Expenditure, Income, MenuBar, Admin, DebtsComponent, PersonalDetailsComponent]
 }
 
 var getListOfComponents = ((obj):Array<any>=>{

@@ -40,6 +40,14 @@
                 "global": true,
                 "permissionLevelRequired": 0, 
                 "adminSpecific":false
+            },
+            "personalDetails":{
+                "name":"personalDetails",
+                "path":"/personaldetails",
+                "componentName": "componentString",
+                "global": true, 
+                "permissionLevelRequired": 0,
+                "adminSpecific": false
             }
 
         }

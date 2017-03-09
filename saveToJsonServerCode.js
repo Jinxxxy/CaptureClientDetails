@@ -3,9 +3,10 @@
  var jsonFile = require("jsonfile");
  var fs = require("fs");
  var itemNameFolderFinder = {
-    "income":"ClientFiles",
+    "client":"ClientFiles",
     "expenditure":"ClientFiles",
-    "UserData": "UserData"
+    "UserData": "UserData",
+    "config":"ConfigFiles"
 }
 
 var getData = ((fileName, folderName)=>{
@@ -66,21 +67,19 @@ app.use(function(req, res, next) {
 app.get("/", function(req, res) {
     numberOfRequests++;
      console.log(numberOfRequests)
-     console.log(req.url)
-     //res.send(req.url + res.download('\\src\\app\\JSONFiles\\2000001.json'));
-     
+     console.log(req.url)     
      var wholeObject = JSON.parse(decodeURI(req.url.replace("/?","")));
-     var fileName = wholeObject["fileId"].toString();
-     var targetObject = wholeObject["itemName"];
-     //res.send(JSON.stringify(wholeObject));
-     //res.json(__dirname + "\\src\\app\\JSONFiles\\" + itemNameFolderFinder[targetObject] + "\\" +  fileName + ".json")
-     fs.readFile(__dirname + "/src/app/" + itemNameFolderFinder[targetObject] + "\\" +  fileName + ".json", ((err, data)=>{
-         console.log(itemNameFolderFinder[targetObject] + " - " + fileName)
-         if(err){
+     var fileName = wholeObject["fileId"];
+     var folderName = itemNameFolderFinder[wholeObject.type]
+     fs.readFile(__dirname + "/src/app/" + folderName + "/" +  fileName + ".json", ((err, data)=>{
+         console.log(err);
+         console.log(data);
+         if(err !== null){
              erroObject = {
                  name: "GetClientFileError",
                  message: err
              }
+             res.send(erroObject);
          }
          if(Buffer.isBuffer(data)){
              var returnData = data.toString('utf8');
@@ -92,24 +91,26 @@ app.get("/", function(req, res) {
      }))
 });
 app.post("", function(req, res) { 
+    console.log(req.body)
+    console.log("RAWR")
     var wholeObject = JSON.parse(decodeURI(req.url.replace("/?",""))); 
+    console.log(wholeObject);
     //Name of file to find 
-    var fileName = wholeObject["saveProfile"][1]["userId"].toString();
+    var fileName = wholeObject.fileId.toString();
     //Name of item in object to be replaced (IE 'Income' or 'Expenditure')
-    var itemName = wholeObject["saveProfile"][0]["itemName"].toString();
+
     //Converted itemName above to a folder name for file. Uses object 'itemNameFolderFinder'. Potentially move out to a config file for ease.
-    var folderFinder = itemNameFolderFinder[itemName];
+    var folderFinder = itemNameFolderFinder[wholeObject.type];
     //Gets a promise to return the file using the parameters above. Will then replace sections of JSON to update the file. 
-    var getDataPromise = getData(fileName, folderFinder).then((returnedObject)=>{
-        returnedObject["data"][itemName] = wholeObject["data"];
+    var getDataPromise = getData(fileName, folderFinder).then((returnedObject)=>{        
         var file = './src/app/' + folderFinder + "/" + fileName + "" + '.json';
-        jsonFile.writeFile(file, returnedObject, ((err)=>{
+        jsonFile.writeFile(file, wholeObject.passedData, ((err)=>{
             if(err){
                 res.send(err);
                 console.log(err);
             } else {
-                res.send(itemName + " Item Updated");
-                console.log(itemName + " Item Updated");
+                res.send("Item Updated");
+                console.log("Item Updated");
             }            
         }))
      }).catch((errorObject)=>{
@@ -128,8 +129,11 @@ app.get(/^(.+)$/, function(req, res){
      console.log(dataToSave);
      var file = fileName + '.json';
      jsonFile.writeFile(file, dataToSave, ((err)=>{
-         console.log(err)
+         if(err){
+            console.log(err)
+        }
      }))
+     
 });
 
 var port = process.env.PORT || 5000;

@@ -25,7 +25,7 @@
             <input type="number" class="u-half-width" [(ngModel)]="incomeBudgetFields[incomeBudgetFields.indexOf(bf)].clientFigure">
         </td>
         <td>
-            <select class="u-half-width" selected="bf.frequencyString" [(ngModel)]="bf.frequencyString" value="bf.clientPartnerOrJoint">
+            <select class="u-half-width"  [(ngModel)]="bf.frequencyString" value="bf.clientPartnerOrJoint">
                 <option class="u-half-width" *ngFor="let opt of payFrequencyList" [selected]="bf.frequencyString === opt">
                     {{opt}}
                 </option>
@@ -33,8 +33,8 @@
         </td>
         <td>
             <select [(ngModel)]="bf.clientPartnerOrJoint">
-                <option *ngFor="let _opt of _cpjList" [selected]="bf.clientPartnerOrJoint.toLowerCase() === _opt.toLowerCase()">
-                    {{_opt}} - {{bf.clientPartnerOrJoint.toLowerCase() === _opt.toLowerCase()}}
+                <option *ngFor="let _opt of _cpjList" [selected]="bf.clientPartnerOrJoint.toLowerCase() === _opt">
+                    {{_opt}}
                 </option>
             </select>
         </td>
@@ -85,7 +85,7 @@
         </td>
         <td>
             <select [(ngModel)]="_newBudgetItem.clientPartnerOrJoint">
-                <option *ngFor="let _opt of _cpjList">
+                <option *ngFor="let _opt of _cpjList" >
                     {{_opt}}
                 </option>
             </select>

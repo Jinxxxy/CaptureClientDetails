@@ -39,7 +39,7 @@ export class Admin {
   }
   getUserDetails(){
     var requestObject: dataRequestTemplate = new dataRequestTemplate(
-      "",
+      "UserData",
       100001,
       "UserData",
       false

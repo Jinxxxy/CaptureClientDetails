@@ -26,40 +26,39 @@ export class Home {
     alert(clientRef)
   }
   getData: getDataService
-  public test(){     
-        const reqObject = new dataRequestTemplate("test", 2000001, "income");        
-        const resp = this.gd.getRequestString(reqObject);
-        resp.subscribe((resp)=>{
-            console.log(resp)            
-        }, (err)=>{
-            console.log(err)
-        }, ()=>{
-            console.log("Completed!")
-        })
-    }
-  public loadClient(){
-    const requestObject: dataRequestTemplate = new dataRequestTemplate(
-      "",
-      this._clientId,
-      "income",
-      false
-    )
-    const loadClientRequest: Observable<Response> = this.getData.getRequestJSON(requestObject);
-    const clientData: Object = loadClientRequest.map(
-      (returnedObject: Response)=>{
-        var processedObject = returnedObject.json();
-        console.log(processedObject["data"])
+  // public test(){     
+  //       const reqObject = new dataRequestTemplate("test", 2000001, "income");        
+  //       const resp = this.gd.getRequestString(reqObject);
+  //       resp.subscribe((resp)=>{
+  //           console.log(resp)            
+  //       }, (err)=>{
+  //           console.log(err)
+  //       }, ()=>{
+  //           console.log("Completed!")
+  //       })
+  //   }
+  // public loadClient(){
+  //   const requestObject: dataRequestTemplate = new dataRequestTemplate(
+  //     "client",
+  //     this._clientId,
+  //     "income",
+  //     false
+  //   )
+  //   const loadClientRequest: Observable<Response> = this.getData.getRequestJSON(requestObject);
+  //   const clientData: Object = loadClientRequest.map(
+  //     (returnedObject: Response)=>{
+  //       var processedObject = returnedObject.json();
+  //       console.log(processedObject["data"])
 
-        datadump.client = processedObject["data"];
-        datadump.clientLoaded = true;
-        datadump.clientReference = this._clientId;
-        console.log(datadump)
-      }
-    ).subscribe();
-  }
+  //       datadump.client = processedObject["data"];
+  //       datadump.clientLoaded = true;
+  //       datadump.clientReference = this._clientId;
+  //       console.log(datadump)
+  //     }
+  //   ).subscribe();
+  // }
   constructor(private gd: getDataService)
   {
   this.getData = gd;  
-  this.test(); 
   }
 }
