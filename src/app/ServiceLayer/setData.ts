@@ -14,13 +14,14 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class setDataService{
     private _http: Http; 
-    saveClientData: Function = ((): Observable<Object>=>{
+    saveClientData: Function = ((crudtype: string): Observable<Object>=>{
         var postClientTemplate: dataRequestTemplate = new dataRequestTemplate(
             "client",
             datadump.clientReference
         );
                 
         postClientTemplate.passedData = datadump.client;
+        postClientTemplate.crud = crudtype;
         console.log(postClientTemplate)
         var returnObservable: Observable<Object> = this._http.post(
             connectionData.baseServerString 

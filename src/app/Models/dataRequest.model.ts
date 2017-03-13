@@ -1,4 +1,5 @@
 export class dataRequestTemplate {
+    crud: string = "";
     type: string = "";
     fileId: any = 0;
     itemName: string = "";

@@ -1,6 +1,16 @@
 <h3>
     {{title}}
 </h3>
-<!--<label *ngFor="let wi of _worklistArray" (click)="loadClientBudget(wi)" class="workItem">
-    Client - <input type="text" class="u-full-width" readonly value="{{wi}}">
-</label>-->
+<h6>Client Reference: </h6>
+<div *ngIf="_datadump.clientReference !== null">
+    {{_datadump.clientReference}}
+</div>
+<div *ngIf="!_datadump.clientLoaded">
+    <input type="number" class="u-full-width" [(ngModel)]="_clientId">
+    <input type="button" value="Load Client" #clientRef (click)="loadClient(_clientId)" class="button-primary">
+</div>
+<div *ngIf="!_datadump.clientLoaded">
+    Or Start a new client:<br>
+    <input type=button value="Start new client" (click)="scaffoldNewClient('2000004')">
+</div>
+

@@ -1,55 +1,54 @@
 {
-    "data":{
-        "routingLinks":{
-            "home":{
-                "name":"Home",
-                "path":"/home",
-                "componentName": "componentString",
-                "global": true, 
-                "permissionLevelRequired": 0,
-                "adminSpecific": false
-            },
-            "adminpanel":{
-                "name": "Admin Panel",
-                "path": "/admin",
-                "componentName": "componentString",
-                "global": false,
-                "permissionLevelRequired": 5, 
-                "adminSpecific":true
-            },
-            "expenditureForm":{
-                "name": "Expenditure Form",
-                "path": "/expenditure",
-                "componentName": "componentString",
-                "global": true,
-                "permissionLevelRequired": 0, 
-                "adminSpecific":false
-            },
-            "incomeForm":{
-                "name": "incomeForm",
-                "path": "/income",
-                "componentName": "componentString",
-                "global": true,
-                "permissionLevelRequired": 0, 
-                "adminSpecific":false
-            },
-            "debtScreen":{
-                "name": "debtForm",
-                "path": "/debts",
-                "componentName": "componentString",
-                "global": true,
-                "permissionLevelRequired": 0, 
-                "adminSpecific":false
-            },
-            "personalDetails":{
-                "name":"personalDetails",
-                "path":"/personaldetails",
-                "componentName": "componentString",
-                "global": true, 
-                "permissionLevelRequired": 0,
-                "adminSpecific": false
-            }
-
+    "routingLinks":{
+        "home":{
+            "name":"Home",
+            "path":"/home",
+            "componentName": "componentString",
+            "global": true, 
+            "permissionLevelRequired": 0,
+            "adminSpecific": false
+        },
+        "adminpanel":{
+            "name": "Admin Panel",
+            "path": "/admin",
+            "componentName": "componentString",
+            "global": false,
+            "permissionLevelRequired": 5, 
+            "adminSpecific":true
+        },
+        "expenditureForm":{
+            "name": "Expenditure Form",
+            "path": "/expenditure",
+            "componentName": "componentString",
+            "global": true,
+            "permissionLevelRequired": 0, 
+            "adminSpecific":false
+        },
+        "incomeForm":{
+            "name": "incomeForm",
+            "path": "/income",
+            "componentName": "componentString",
+            "global": true,
+            "permissionLevelRequired": 0, 
+            "adminSpecific":false
+        },
+        "debtScreen":{
+            "name": "debtForm",
+            "path": "/debts",
+            "componentName": "componentString",
+            "global": true,
+            "permissionLevelRequired": 0, 
+            "adminSpecific":false
+        },
+        "personalDetails":{
+            "name":"personalDetails",
+            "path":"/personaldetails",
+            "componentName": "componentString",
+            "global": true, 
+            "permissionLevelRequired": 0,
+            "adminSpecific": false
         }
+
     }
+    
 }

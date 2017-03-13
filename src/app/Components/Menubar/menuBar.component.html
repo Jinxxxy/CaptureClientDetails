@@ -1,11 +1,11 @@
-<div class="clientRefOverlay" *ngIf="!_datadump['clientLoaded']">
+<!--<div class="clientRefOverlay" *ngIf="!_datadump['clientLoaded']">
     <div class="crom">
         <br><br>
         <h6>Client Reference</h6>
         <input type="number" class="u-full-width" [(ngModel)]="_clientId">
         <input type="button" value="Load Client" #clientRef (click)="loadClient(_clientId)" class="button-primary">
     </div>
-</div>
+</div>-->
 <div class="wrapper">
     <div *ngFor="let i of linksMenu">
         <a class="button menu" *ngIf="_datadump['clientLoaded'] || i.name == 'Home'" [routerLink]="i.path">{{i.name}}</a>

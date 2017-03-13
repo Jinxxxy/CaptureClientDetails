@@ -32,24 +32,7 @@ export class MenuBar {
     private filterPermissionList(inputVal: number){
         return inputVal < this.userPermissionLevel;
     }
-    loadClient(clientRef: number){
-    var requestObject: dataRequestTemplate = new dataRequestTemplate(
-            "client",
-            clientRef,
-            "income",
-            false)
-    var incomeRequest: Observable<Response> = this.gd.getRequestJSON(requestObject);
-    incomeRequest.map(
-      (returnedObject: Response)=>{
-        console.log(returnedObject.json())
-        var parsedObject = returnedObject.json();
-        console.log(parsedObject)
-        datadump.client = parsedObject;
-        datadump.clientLoaded = true;
-        datadump.clientReference = clientRef;        
-      }
-    ).subscribe();
-  }
+    
     private getJson(){
 
         var getRoutingLinksTemplate: dataRequestTemplate = new dataRequestTemplate(
@@ -58,7 +41,7 @@ export class MenuBar {
         
         this.gd.getRequestJSON(getRoutingLinksTemplate).map(
             (_getRoutes: Response)=>{            
-                var JsonConfig = _getRoutes.json()["data"]["routingLinks"];
+                var JsonConfig = _getRoutes.json()["routingLinks"];
                 console.log(JsonConfig)
                 for(var i in JsonConfig){
                     if(JsonConfig[i].permissionLevelRequired <= this.userPermissionLevel)
