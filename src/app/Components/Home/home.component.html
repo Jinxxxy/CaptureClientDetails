@@ -13,4 +13,11 @@
     Or Start a new client:<br>
     <input type=button value="Start new client" (click)="scaffoldNewClient('2000004')">
 </div>
+<div *ngIf="_datadump.clientLoaded">
+    <h3>Summary</h3>
+    <div><h5>Total Income</h5> <div class="label">£{{_calculations.calculateTotalIncome(_datadump.client.income)}}</div></div>
+    <div><h5>Total Expenditure</h5> <div class="label">£{{_calculations.calculateTotalExpenditure(_datadump.client.expenditure)}}</div></div>
+    <div><h5>Total Debt Level </h5> <div class="label">£{{_calculations.calculateTotalDebtLevel(_datadump.client.debts)}}</div></div>
+    <div><h5>Surplus Amount </h5> <div class="label">£{{_calculations.calculateSurplus()}}    
+</div>
 

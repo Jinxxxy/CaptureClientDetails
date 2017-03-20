@@ -1,12 +1,13 @@
 import {Component, Pipe} from '@angular/core';
 import {budgetItemClass} from '../../Models/budgetItem.model';
 import {generalHelpers} from '../../HelperMethods/GeneralHelper'
-import {Router, ROUTER_CONFIGURATION} from '@angular/router'
+import {Router, ROUTER_CONFIGURATION, Event, RouterModule, NavigationStart} from '@angular/router'
 import {datadump} from '../../ServiceLayer/dataStore'
 import {Observable} from 'rxjs';
 import {Response} from '@angular/http'
 import {dataRequestTemplate} from '../../Models/dataRequest.model'
 import {getDataService} from '../../ServiceLayer/getData.service'
+import {setDataService} from '../../ServiceLayer/setData'
 
 
 @Component({
@@ -14,7 +15,7 @@ import {getDataService} from '../../ServiceLayer/getData.service'
   templateUrl: './menuBar.component.html',
   styleUrls: ['./menuBar.component.css',
   './../../Stylesheets/skeleton.css'],
-  providers: [getDataService]
+  providers: [getDataService, setDataService]
   
 })
 
@@ -24,13 +25,48 @@ export class MenuBar {
     private userPermissionLevel: number = 5;
     private gd: getDataService;
     private _clientId: number;
-    private _userId: 100001;
+    private _userId: number;
+    private _router: Router;
     _datadump = datadump;
     private outputFunc():Object{
-    return datadump.client;
+    return datadump.changed;
   }
     private filterPermissionList(inputVal: number){
         return inputVal < this.userPermissionLevel;
+        
+    }
+    getUserDetails(){
+        var requestObject: dataRequestTemplate = new dataRequestTemplate(
+        "user",
+        this._userId,
+        "UserData",
+        false
+
+        );
+        const _getUserDetails: Observable<Response> = this.gd.getRequestJSON(
+        requestObject
+        );
+        var outputObject = _getUserDetails.map(
+            (returnedObject: Response)=>{
+                var parsedObject: Object = returnedObject.json();
+                console.log(parsedObject);
+                if(parsedObject[0]!== undefined){
+                    var userObject: Object = parsedObject[0];
+                    console.log(userObject["userId"])
+                    datadump.userId = userObject["userId"]; 
+                    console.log(parsedObject)
+                    datadump.user = userObject;
+                    datadump.userLoaded = true;
+                } else if(parsedObject["error"]!== undefined){
+                    var errorObject = returnedObject.json()
+                    alert(errorObject.errorMessage + " for " + errorObject.requestType);
+
+                } else {
+                    alert("COULDNT COMPLETE REQUEST")
+                };
+
+            }
+        ).subscribe();
     }
     
     private getJson(){
@@ -41,7 +77,9 @@ export class MenuBar {
         
         this.gd.getRequestJSON(getRoutingLinksTemplate).map(
             (_getRoutes: Response)=>{            
-                var JsonConfig = _getRoutes.json()["routingLinks"];
+                console.log(_getRoutes)
+                var JsonConfig = _getRoutes.json()[0]["data"];
+                
                 console.log(JsonConfig)
                 for(var i in JsonConfig){
                     if(JsonConfig[i].permissionLevelRequired <= this.userPermissionLevel)
@@ -59,10 +97,22 @@ export class MenuBar {
         // })
         // conn.send();
     }
-    constructor(private _gd: getDataService){
+    constructor(private _gd: getDataService, private __setDataService: setDataService, private __router: Router){
         this.gd = _gd;
         this.getJson();        
-        console.log(datadump)
+        console.log(datadump);
+        this._router = __router;
+        this._router.events.forEach((event)=>{
+            if(event instanceof NavigationStart){
+                if(this._datadump.userLoaded && this._datadump.clientLoaded){
+                    console.log(event)
+                    console.log("Mapped event is now working!")
+                    __setDataService.saveClientData();
+                    __setDataService.saveUserData();
+                }
+            }
+            
+        })
     }
 }
 

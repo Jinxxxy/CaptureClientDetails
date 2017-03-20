@@ -7,6 +7,7 @@ import {stringKeyConverters} from '../../HelperMethods/keyToStringConverters'
 import {getDataService} from '../../ServiceLayer/GetData.service';
 import {Observable} from 'rxjs';
 import {dataRequestTemplate} from '../../Models/dataRequest.model'
+import {datadump} from '../../ServiceLayer/dataStore'
 import {Response} from '@angular/http'
 @Component({
   selector: 'adminPanel',
@@ -17,13 +18,12 @@ import {Response} from '@angular/http'
 })
 export class Admin {
   private title: string = "Admin Panel"  
-  private _userData: Object = {};
+  private _userData: Object = datadump.user;
   private _userId: string = "100001";
   private _save: setDataService;
   private keyToString: Function = stringKeyConverters.userPermissionLevelKeyToString;
   private getData: getDataService;
   printFullName(_firstName: string, _lastName: string): void{
-    console.log(_firstName + " " + _lastName)
   }
   saveData(){
     var data = {
@@ -33,33 +33,14 @@ export class Admin {
       ],
       "data": [this._userData]
     }
-    console.log(data)
     this._save.saveUserData();
 
   }
-  getUserDetails(){
-    var requestObject: dataRequestTemplate = new dataRequestTemplate(
-      "UserData",
-      100001,
-      "UserData",
-      false
-
-    );
-    const _getUserDetails: Observable<Response> = this.getData.getRequestJSON(
-      requestObject
-    );
-    var outputObject = _getUserDetails.map(
-      (returnedObject: Response)=>{
-        var parsedObject: Object = returnedObject.json();
-        console.log(parsedObject)
-        this._userData = parsedObject["data"][0];
-      }
-    ).subscribe();
-  }
+  
   constructor(private __get: getDataService, private __save: setDataService)
   {
     this.getData = __get;  
     this._save = __save;
-    this.getUserDetails();  
+    //this.getUserDetails();  
   }
 }

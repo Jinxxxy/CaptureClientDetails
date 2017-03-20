@@ -22,7 +22,6 @@ export class setDataService{
                 
         postClientTemplate.passedData = datadump.client;
         postClientTemplate.crud = crudtype;
-        console.log(postClientTemplate)
         var returnObservable: Observable<Object> = this._http.post(
             connectionData.baseServerString 
             + connectionData.serverParameterSeparator +
@@ -30,10 +29,17 @@ export class setDataService{
         return returnObservable;        
     })
     saveUserData: Function = ((): Observable<Object>=>{
+        console.log('Saving...')
+        var postClientTemplate: dataRequestTemplate = new dataRequestTemplate(
+            "user",
+            datadump.clientReference
+        );
+                
+        postClientTemplate.passedData = datadump.user;
         var returnObservable: Observable<Object> = this._http.post(
             connectionData.baseServerString 
-            + connectionData.serverParameterSeparator, 
-            JSON.stringify(datadump.user)
+            + connectionData.serverParameterSeparator +
+            JSON.stringify(postClientTemplate), ""
         )
         return returnObservable
     })

@@ -65,6 +65,4 @@ var getListOfComponents = ((obj):Array<any>=>{
     return tempArr
 })
 
-console.log(getListOfComponents(componentList.allComponents))
-
 export default componentList;

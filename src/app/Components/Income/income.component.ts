@@ -33,7 +33,11 @@ export class Income {
   _clientLoaded: boolean = datadump.clientLoaded;
   removeFromBudgetList(itemIndex: number){
     datadump.client.income.splice(itemIndex, 1);
-    this.incomeBudgetFields.splice(itemIndex, 1)
+    this.incomeBudgetFields.splice(itemIndex, 1);
+    this.__save.saveClientData().subscribe();
+  }
+  checkForChanges(_name: string, _value: number, _freq: string, _for: string){
+
   }
   save(saveObject: Object){    
     var saveResponse: Observable<Object> = this._save.saveClientData();
@@ -53,7 +57,6 @@ export class Income {
       temp.frequencyString = this._newBudgetItem["frequencyString"];
       temp.frequency = stringKeyConverters.convertFrequencyStringToKey(temp.frequencyString);
       temp.clientPartnerOrJoint = this._newBudgetItem["clientPartnerOrJoint"];
-      console.log(datadump.client.income);
       datadump.client.income.push(temp);
       this._save.saveClientData().subscribe();
       this.loadIncomeData();        
@@ -64,20 +67,13 @@ export class Income {
   addFrequencyString(objectToAddItemTo: Object): Object{
     var frequencyKey:number = objectToAddItemTo["frequency"];
     var frequencyString = stringKeyConverters.convertFrequencyKeyToString(frequencyKey);
-    console.log(objectToAddItemTo);
     objectToAddItemTo["frequencyString"] = frequencyString;
-    console.log(frequencyString)
     return objectToAddItemTo;
   }
   loadIncomeData(){
-    console.log(this.incomeBudgetFields)
-    console.log(datadump);
-    if(datadump["clientLoaded"] === true){      
-      console.log(datadump.client.income);
+    if(datadump["clientLoaded"] === true){   
       var f = datadump.client.income;
-      console.log(f);
       var sortedObject = this.putItemsIntoArray(f);
-      console.log(sortedObject);
       this.incomeBudgetFields = sortedObject;
     } else {
 
@@ -94,9 +90,7 @@ export class Income {
       conn.open("get", "./app/ClientFiles/" + this._clientId + ".json", true);
       conn.onload = (()=>{
           var dataObject = JSON.parse(conn.response).data.personalDetails;
-          console.log(dataObject)
           this.jointBudget = dataObject["jointBudget"];
-          console.log(dataObject["jointBudget"])
       })
       conn.onerror = (()=>{
           console.log(conn.response);
@@ -107,10 +101,8 @@ export class Income {
     var returnArray = [];
     for(var oa in arrayOfObject){
       var tempArrayObject = arrayOfObject[oa];
-      console.log(tempArrayObject);
       returnArray.push(tempArrayObject);      
     }
-    console.log(returnArray);
     return returnArray
   }
   putItemsIntoArray(objectOfArrays:Object):Array<Object>{
@@ -126,10 +118,7 @@ export class Income {
     var joint = [];
     
     for(var x in objectOfArraysToSort){
-      console.log(objectOfArraysToSort[x])
       if(objectOfArraysToSort[x].clientPartnerOrJoint === "client"){
-        console.log(x)
-        console.log(this.getArrayFromObject(objectOfArraysToSort[x]))
         client.push(this.getArrayFromObject(objectOfArraysToSort[x]));
       }
       else if (objectOfArraysToSort[x].clientPartnerOrJoint === "partner"){
@@ -166,11 +155,8 @@ export class Income {
     this.gd = __getData;
     //this.isJointBudget();
     this.getKeyData();
-    console.log(datadump)
     if(datadump['clientLoaded']){      
       this.loadIncomeData();
     }    
-    console.log(this.incomeBudgetFields)
-    console.log(datadump)
   }
 }

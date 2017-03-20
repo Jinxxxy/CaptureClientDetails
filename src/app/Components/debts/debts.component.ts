@@ -19,11 +19,10 @@ export class DebtsComponent implements OnInit {
     return JSON.stringify(this._clientDebtList, null, 2);
   }
   private deleteFromList(itemIndex):void{
-    console.log(typeof datadump.client.debts);
     datadump.client.debts.splice(itemIndex, 1);    
+    this._save.saveClientData().subscribe();
   }
   private addNewDebtItemToList(){
-    console.log(datadump.client.debts);
     //Replace below with a mapped class => object function / method
     datadump.client.debts.push(JSON.parse(JSON.stringify(this.newDebt)));
     this.saveService.saveClientData().subscribe();

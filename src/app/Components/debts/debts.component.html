@@ -21,7 +21,7 @@
         </select>
       </td>
       <td>
-        <input type=button value="Remove from list" (click)="deleteFromList(_clientDebtList.indexOf(_debt))">
+        <input type=button value="Remove from list" class="button-primary" (click)="deleteFromList(_clientDebtList.indexOf(_debt))">
       </td>
     </tr>
     </table>
@@ -46,7 +46,7 @@
           </select>
         </td>
         <td>
-          <input type="button" (click)="addNewDebtItemToList()" value="Add this to the list">
+          <input type="button" class="button-primary" (click)="addNewDebtItemToList()" value="Add">
         </td>
     </table>
 

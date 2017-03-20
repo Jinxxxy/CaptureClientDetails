@@ -20,7 +20,7 @@
     margin-top:0px;
     right:0px;
     float:right;
-    display: none;    
+    overflow: scroll;    
 }
 .workItem{
     border: 2px solid darkgrey;

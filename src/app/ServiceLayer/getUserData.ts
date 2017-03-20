@@ -4,9 +4,7 @@ export var getUserData = {
             var conn = new XMLHttpRequest();
             conn.open("GET", "./app/JSONFiles/UserData/" + userId + ".json", true);
             conn.onload = (()=>{
-                console.log(conn.response)
                 var returnObject = JSON.parse(conn.response);
-                console.log(returnObject)
                 res(returnObject["data"][0]);
             })
             conn.onerror = (()=>{

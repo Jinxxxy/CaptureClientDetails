@@ -1,9 +1,9 @@
-import {budgetItem} from '../Models/budgetItems'
+import {budgetItemClass} from '../Models/budgetItem.model'
 
 export var generalHelpers = {
-    mapToItem: function(json):budgetItem{
+    mapToItem: function(json):budgetItemClass{
         for(var i in json){            
-            var temp: budgetItem = new budgetItem();
+            var temp: budgetItemClass = new budgetItemClass();
             temp.name = json["name"];
             temp.order = json["order"];
             temp.defaultValue = json["defaultValue"];
@@ -13,7 +13,6 @@ export var generalHelpers = {
             temp.clientFigure = json["clientFigure"];
             temp.frequency = json["frequencyIndex"];
         }
-        console.log(temp)
         return temp;
     }
 }

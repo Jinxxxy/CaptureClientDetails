@@ -16,7 +16,6 @@ export class getDataService{
     getRequestString:Function = ((requestObject: dataRequestTemplate):Observable<Response>=>{
         var folderName: string = requestObject["type"];
         var fileName: number = requestObject["fileId"];
-        console.log(requestObject)
         var getObservable: Observable<Response> = this._http.get(
          connectionData.baseServerString +
          connectionData.serverParameterSeparator + JSON.stringify(requestObject)
@@ -30,7 +29,12 @@ export class getDataService{
         var getObservable: Observable<Response> = this._http.get(
          connectionData.baseServerString +
          connectionData.serverParameterSeparator + JSON.stringify(requestObject)         
-        )
+        )._catch((err, caught)=>{
+            getObservable.map(()=>{
+                throw "Couldn't get " + requestObject.type + " data";
+            })
+            return getObservable;
+        })
         return getObservable;
     })
     

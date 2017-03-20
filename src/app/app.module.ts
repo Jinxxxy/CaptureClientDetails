@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Pipe } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import {} from './data/componentList'
 import {RouterModule, Routes} from '@angular/router'
 import {componentList} from './ConfigFiles/componentList';
 import { PersonalDetailsComponent } from './Components/personaldetails/personaldetails.component';
@@ -14,11 +13,13 @@ const appRoutes: Routes = componentList.linkArray;
     BrowserModule,
     FormsModule,
     HttpModule, 
-    RouterModule.forRoot(appRoutes)
-    
+    RouterModule.forRoot(appRoutes),
+    RouterModule.forChild(appRoutes)
   ],
   providers: [],
   bootstrap: [componentList.allComponents.appcomponent.component]
 })
-export class AppModule { }
+export class AppModule {
+  
+}
 

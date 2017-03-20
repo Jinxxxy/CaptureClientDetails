@@ -7,7 +7,8 @@ import {datadump} from '../../ServiceLayer/dataStore';
 import {Observable, Subscription} from 'rxjs/Rx';
 import {getDataService} from '../../ServiceLayer/getData.service';
 import {dataRequestTemplate} from '../../Models/dataRequest.model'
-import {emptyDataModel} from '../../Models/emptyDataModel.model'
+import {emptyDataModel} from '../../Models/emptyDataModel.model';
+import {calculations} from '../../ServiceLayer/calculations.service'
 
 @Component({
   selector: 'homePage',
@@ -23,6 +24,7 @@ export class Home {
   private title: string = "Home Panel";
   _datadump = datadump;
   _clientLoaded: boolean = datadump.clientLoaded;
+  _calculations: calculations;
   loadClientBudget(clientRef: number){
     alert(clientRef)
   }
@@ -35,26 +37,29 @@ export class Home {
               false)
       var incomeRequest: Observable<Response> = this.getData.getRequestJSON(requestObject);
       incomeRequest.map(
+        
         (returnedObject: Response)=>{
-          console.log(returnedObject.json())
-          var parsedObject = returnedObject.json();
-          console.log(parsedObject)
+          try {
+          var parsedObject = returnedObject.json()[0];
+          datadump.clientReference = parsedObject["personalDetails"]["clientRef"];
+          
           datadump.client = parsedObject;
-          datadump.clientLoaded = true;
-          datadump.clientReference = clientRef;        
+          datadump.clientLoaded = true;          
+        } catch(error){
+          var errorObject = returnedObject.json()
+            alert(errorObject.errorMessage + " for " + errorObject.requestType);
+          }
         }
       ).subscribe();
   }
   scaffoldNewClient(clientReference: number){
     datadump.client = emptyDataModel.client;
-    console.log(datadump.client)
-    console.log(emptyDataModel.client)
     datadump.clientReference = clientReference;
     datadump.clientLoaded = true;
   }
-  
   constructor(private gd: getDataService){
   this.getData = gd;  
+  this._calculations = calculations;
   }
 
 }

@@ -29,7 +29,7 @@
             </select>
         </td>
         <td>
-            <input type="button" *ngIf="bf.addedByClient" class="button-primary" value="Delete Item" (click)="removeFromBudgetList(budgetFields.indexOf(bf))">
+            <input type="button" *ngIf="bf.addedByClient" class="button-primary" value="Delete" (click)="removeFromBudgetList(budgetFields.indexOf(bf))">
         </td>
     </tr>
     <tr>
@@ -53,7 +53,7 @@
         </select>
     </td>
     <td>
-        <input type="button" class="button-primary" value="Add this to the list" (click)="addNewFunc()">
+        <input type="button" class="button-primary" value="Add" (click)="addNewFunc()">
     </td>
     <td>
 

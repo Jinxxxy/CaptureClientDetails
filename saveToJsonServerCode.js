@@ -3,15 +3,15 @@
  var jsonFile = require("jsonfile");
  var fs = require("fs");
  var mdb = require("mongodb");
- const db = require("monk")("mongodb://localhost/27017");
+ const db = require("monk")("mongodb://127.0.0.1/27017");
 
  var itemNameFolderFinder = {
     "client":{
-        tableName: "clientFiles",
-        keyName: "personalData.clientRef"
+        tableName: "clientData",
+        keyName: "personalDetails.clientRef"
     },
     "expenditure":"clientFiles",
-    "UserData": {
+    "user": {
         tableName:"userData",
         keyName:"userId"
     },
@@ -21,7 +21,31 @@
     }
 }
 
-var getData = ((fileName, folderName)=>{
+function updateClientData(wholeObject){
+    //Name of file to find 
+    var fileName = wholeObject.fileId.toString();
+    //Converted itemName above to a folder name for file. Uses object 'itemNameFolderFinder'. Potentially move out to a config file for ease.
+    var folderFinder = itemNameFolderFinder[wholeObject.type];
+    //Gets a promise to return the file using the parameters above. Will then replace sections of JSON to update the file. 
+
+    var getDataPromise = getData(fileName, folderFinder).then((returnedObject)=>{        
+        var file = './src/app/' + folderFinder + "/" + fileName + "" + '.json';
+        jsonFile.writeFile(file, wholeObject.passedData, ((err)=>{
+            if(err){
+                return(err);
+                console.log(err);
+            } else {
+                return("Item Updated");
+                console.log("Item Updated");
+            }            
+        }))
+     }).catch((errorObject)=>{
+         return(errorObject)
+         console.log(errorObject)
+     })
+     return getDataPromise;
+}
+function getData(fileName, folderName){
     var getDataPromise = new Promise((res,rej)=>{
         console.log(__dirname + "/src/app/" + folderName + "/" + fileName + ".json")
         fs.readFile(__dirname + "/src/app/" + folderName + "/" + fileName + ".json", "utf8", (err, data)=>{
@@ -38,36 +62,14 @@ var getData = ((fileName, folderName)=>{
                 res(JSON.parse(data));
             }
         })
-
-
-        /*try{
-            var conn = new XMLHttpRequest();
-            conn.open("GET", "http://localhost:5000/src/app/JSONFiles/" + folderName + "/" + fileName + ".json", true);
-            conn.onload = (()=>{
-                console.log(conn.response);
-                res(conn.response);
-            });
-            conn.onerror = (()=>{
-                rej({
-                    errorMessage:"Unable to retrieve file:" + conn.response,
-                    _fileName: fileName, 
-                    callingFunction: getData.toString(),
-                    failedTime: Date.now().toString()
-                })
-            })
-            conn.send()
-        }
-        catch(err){
-            console.log(err);
-        }*/
     })   
     return getDataPromise
-});
-var removeFrequencyString = ((itemArray)=>{
+};
+function removeFrequencyString(itemArray){
     for(var item in itemArray){
         delete itemArray[item]["frequencyString"];
     }
-});
+};
 function getLatestClientRef(){
     //WARNING HACK ALERT!!!
     var path = './src/app/clientFiles';
@@ -109,45 +111,78 @@ app.use(function(req, res, next) {
 app.get("/", function(req, res) {
     numberOfRequests++;
      console.log(numberOfRequests)
-     console.log(req.url)     
-     var wholeObject = JSON.parse(decodeURI(req.url.replace("/?","")));
-     var fileName = wholeObject["fileId"];
-     var tableName = itemNameFolderFinder[wholeObject.type]
-     db.get(tableName).find({"personalData.clientRef": fileName}).then((results)=>{
-        res.json(results);
+     console.log(req.url)  
+     db.get("configFiles").find({}).then((results)=>{
+         console.log(results)
      })
+     var wholeObject = JSON.parse(decodeURI(req.url.replace("/?","")));
+     console.log(wholeObject);
+     var fileName = wholeObject["fileId"]
+     console.log(fileName);
+     var requestConfig = itemNameFolderFinder[wholeObject.type];
+     var folderName = requestConfig.tableName.toString();
+     console.log(requestConfig)
+     var _keyName = requestConfig.keyName.toString();
+     console.log(requestConfig.keyName)
+     console.log(fileName)
+     var f = {};
+     f[_keyName] = fileName;
+     console.log(f)
+     db.get(folderName).find(f,{data:1},(ddd)=>{
+        console.log(ddd)
+     }).then((results)=>{
+         if(Object.keys(results).length > 0){
+            console.log("Results: ")
+            console.log(results)
+            res.json(results);
+         } else {
+            res.send({
+                error: true,
+                errorMessage: "Unable to find data", 
+                requestType: folderName
+            })
+         }
+     }).catch((err)=>{
+         console.log(err)
+
+     })
+
+     console.log("After the request")
 });
 
-function updateClientData(wholeObject){
-    //Name of file to find 
-    var fileName = wholeObject.fileId.toString();
-    //Converted itemName above to a folder name for file. Uses object 'itemNameFolderFinder'. Potentially move out to a config file for ease.
-    var folderFinder = itemNameFolderFinder[wholeObject.type];
-    //Gets a promise to return the file using the parameters above. Will then replace sections of JSON to update the file. 
 
-    var getDataPromise = getData(fileName, folderFinder).then((returnedObject)=>{        
-        var file = './src/app/' + folderFinder + "/" + fileName + "" + '.json';
-        jsonFile.writeFile(file, wholeObject.passedData, ((err)=>{
-            if(err){
-                return(err);
-                console.log(err);
-            } else {
-                return("Item Updated");
-                console.log("Item Updated");
-            }            
-        }))
-     }).catch((errorObject)=>{
-         return(errorObject)
-         console.log(errorObject)
-     })
-     return getDataPromise;
-}
 app.post("", function(req, res) { 
-    console.log(req.body)
-    console.log("RAWR")
-    var wholeObject = JSON.parse(decodeURI(req.url.replace("/?",""))); 
-    console.log(wholeObject);
-    //Potentially move to single function to decide response method. 
+     var wholeObject = JSON.parse(decodeURI(req.url.replace("/?","")));
+     console.log(wholeObject);
+     var fileName = wholeObject["fileId"]
+     console.log(fileName);
+     var requestConfig = itemNameFolderFinder[wholeObject.type];
+     var folderName = requestConfig.tableName.toString();
+     console.log(requestConfig)
+     var _keyName = requestConfig.keyName.toString();
+     console.log(requestConfig.keyName)
+     console.log(fileName)
+    var f = {};
+    f[_keyName] = fileName;
+    console.log(f)
+    var swapsy = JSON.parse(JSON.stringify(wholeObject.passedData).replace("'","\""));
+    
+
+    db.get(folderName).update(f,swapsy).then((results)=>{
+        console.log("Update Completed.")        
+        res.send(
+            {
+                error: false,
+                errorMessage: null, 
+                returnMessage: 'Data successfully saved!'
+
+            }
+        )
+     }).catch((err)=>{
+         console.log(wholeObject.passedData)
+        console.log(err)
+     })
+
     if(wholeObject.crud === "u"){
         var resPromise = updateClientData(wholeObject);
         resPromise.then((response)=>{
@@ -178,27 +213,14 @@ app.get(/^(.+)$/, function(req, res){
      }))
      
 });
+
 var port = process.env.PORT || 5000;
  app.listen(port, function() {
-   console.log("Listening on " + port);   
-//    mdb.MongoClient.connect("mongodb://localhost/27017"), (err, db)=>{
-//         if(err){
-//             console.log(err)
-//         } else {
-//             var dbcoll = db.collection("clientData");
-//             _db = db;
-//             // dbcoll.find({"personalDetails.clientRef":2000002}).toArray().then((results)=>{
-//             //     console.log(results)
-//             // })
-//         };
-//     }
-//     _db.collection("clientData").find().toArray().then((results)=>{
-//         console.log(results)
-//     })
-
-   db.get("configFiles").find({}).then((result)=>{
-       console.log(result)
-   })
-   
-   
+   console.log("Listening on " + port);
+   var client = mdb.MongoClient("mongodb://127.0.0.1/27017", (err,_db)=>{
+       console.log(_db)
+   });
+   db.get("userData").find({}).then((results)=>{
+       console.log(results)
+   })   
 });

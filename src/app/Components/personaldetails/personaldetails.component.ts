@@ -5,36 +5,27 @@ import {Observable} from 'rxJS';
 import {dataRequestTemplate} from '../../Models/dataRequest.model';
 import {Response} from '@angular/http';
 import {getDataService} from '../../ServiceLayer/getData.service';
+import {setDataService} from '../../ServiceLayer/setData'
 
 @Component({
   selector: 'app-personal-details',
   templateUrl: './personaldetails.component.html',
   styleUrls: ['./personaldetails.component.css',
   './../../Stylesheets/skeleton.css'],
-  providers:[getDataService]
+  providers:[getDataService,setDataService]
 })
 export class PersonalDetailsComponent implements OnInit {
+  _clientDetails;
   newClient: clientDetails;
   private gd: getDataService;
+  private __save: setDataService;
 
-  constructor(private _gd: getDataService) {
+  constructor(private _gd: getDataService, private _save: setDataService) {
     this.gd = _gd
-    var _clientDetails: clientDetails = new clientDetails();
-    _clientDetails.firstName = "Test";
-    _clientDetails.middleNames = "Mc";
-    _clientDetails.surname = "Testy";
-    _clientDetails.dateOfBirth = new Date();
-    _clientDetails.homePhone = "019777999999"
-    _clientDetails.workPhone = "019777999999"
-    _clientDetails.mobilePhone = "019777999999"
-    _clientDetails.addressLine1 = "addy1"
-    _clientDetails.addressLine2 = "addy2"
-    _clientDetails.townCity = "townstring"
-    _clientDetails.country = "country"
-    _clientDetails.postCode = "WF99PP"
-    this.newClient = _clientDetails;
+    this.__save = _save;
+    
    }
-   
+
   ngOnInit() {
   }
 }

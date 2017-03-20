@@ -40,7 +40,7 @@
         </td>
         <td>
             <div *ngIf="bf.addedByClient === true">
-                <input type="button" class="button-primary" value="Delete Item" (click)="removeFromBudgetList(incomeBudgetFields.indexOf(bf))">        
+                <input type="button" class="button-primary" value="Delete" (click)="removeFromBudgetList(incomeBudgetFields.indexOf(bf))">        
             </div>
         </td>
     </tr>
@@ -91,7 +91,7 @@
             </select>
         </td>
         <td>
-            <input type="button" class="button-primary" value="Add a new item" name="addNewButton" (click)="addNewFunc()">
+            <input type="button" class="button-primary" value="Add" name="addNewButton" (click)="addNewFunc()">
         </td>
     </tr>
 </table>

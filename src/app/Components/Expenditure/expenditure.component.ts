@@ -43,14 +43,14 @@ export class Expenditure {
     conn.send();
   }  
   removeFromBudgetList(itemIndex: number){
-    datadump.client.expenditure.splice(itemIndex, 1);    
+    datadump.client.expenditure.splice(itemIndex, 1); 
+    this.__save.saveClientData().subscribe();
   }
   calculateTotal(incomeObjectArray: Array<Object>){
     var returnTotal: number = 0;
     for(var incomeObject in incomeObjectArray){
       returnTotal += incomeObjectArray[incomeObject]["clientFigure"];
     }
-    console.log(returnTotal)
     this.total = returnTotal;
     return returnTotal;
   }
@@ -59,7 +59,6 @@ export class Expenditure {
   }
   addNewFunc(){ 
     if(this.addNew !== undefined){
-      console.log(this.addNew)
       // var temp: budgetItemClass = new budgetItemClass();
       // temp.name = this.addNew.name;
       // temp.defaultValue = 1;
@@ -72,7 +71,6 @@ export class Expenditure {
       this.addNew.addedByClient = true;
       datadump.client.expenditure.push(this.addNew); 
       this.addNew =  new budgetItemClass();  
-      console.log() 
       this._save.saveClientData().subscribe();
     } else {
       alert("Add the name of the item you want to add.")
@@ -82,16 +80,13 @@ export class Expenditure {
     var jsonPrepObj = {};
     jsonPrepObj[userId] = {};
     for(var x in jsonObj){
-      console.log(jsonPrepObj[userId]);
       jsonPrepObj[userId][jsonObj[x].name] = jsonObj[x];
     }
     return jsonPrepObj;
   }
   processReturnedObject(arr: Object){
     var tempArray: Array<Object> = [];
-    console.log(arr);    
-    for(var i in arr){   
-      console.log(arr[i]);      
+    for(var i in arr){        
       tempArray.push(arr[i])          
     }
     this.budgetFields = tempArray;
