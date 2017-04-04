@@ -8,7 +8,8 @@ import {Observable, Subscription} from 'rxjs/Rx';
 import {getDataService} from '../../ServiceLayer/getData.service';
 import {dataRequestTemplate} from '../../Models/dataRequest.model'
 import {emptyDataModel} from '../../Models/emptyDataModel.model';
-import {calculations} from '../../ServiceLayer/calculations.service'
+import {calculations} from '../../ServiceLayer/calculations.service';
+import {MessageScreenComponent} from '../message-screen/message-screen.component';
 
 @Component({
   selector: 'homePage',
@@ -28,6 +29,7 @@ export class Home {
   loadClientBudget(clientRef: number){
     alert(clientRef)
   }
+
   private getData: getDataService
     loadClient(clientRef: number){
       var requestObject: dataRequestTemplate = new dataRequestTemplate(
@@ -47,7 +49,8 @@ export class Home {
           datadump.clientLoaded = true;          
         } catch(error){
           var errorObject = returnedObject.json()
-            alert(errorObject.errorMessage + " for " + errorObject.requestType);
+            MessageScreenComponent.resetMessageCentre();
+            MessageScreenComponent.notification(errorObject.errorMessage + " for " + errorObject.requestType);
           }
         }
       ).subscribe();

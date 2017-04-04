@@ -1,5 +1,5 @@
 <h3>Expenditure</h3>
-<table class="expenditureTable">
+<table class="expenditureTable card">
     <tr>
         <th>
             Name
@@ -14,7 +14,7 @@
             Get Rid 
         </th>
     </tr>
-    <tr *ngFor="let bf of budgetFields">
+    <tr *ngFor="let bf of _datadump">
         <td>
             <input type="text" [(ngModel)]="bf.name">
         </td>
@@ -38,12 +38,23 @@
         <td></td>
         <td></td>
     </tr>
-    <tr>
-        <td>Add New: </td>
-        <td></td>
-        <td></td>
-        <td>Add to list.</td>
-    </tr>
+</table>
+<h3>Add new</h3>
+<table class="expenditureTable card">
+<tr>
+    <th>
+        Name
+    </th>
+    <th>
+        Amount
+    </th>
+    <th>
+        How often?
+    </th>
+    <th>
+        Add to list:
+    </th>
+</tr>
 <tr>
     <td><input type="text"  [(ngModel)]="addNew.name"></td>
     <td><input type="number"[(ngModel)]="addNew.clientFigure"></td>

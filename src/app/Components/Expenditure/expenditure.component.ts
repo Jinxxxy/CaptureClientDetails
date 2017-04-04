@@ -8,6 +8,8 @@ import {Observable} from'rxjs';
 import {getDataService} from '../../ServiceLayer/getData.service';
 import {Response} from '@angular/http';
 import {dataRequestTemplate} from '../../Models/dataRequest.model';
+import {convertFrequencyValues} from '../../HelperMethods/convertPayFrequencies'
+import {payFrequencyList} from '../../ConfigFiles/payFrequencyList'
 
 @Component({
   selector: 'expenditureForm',
@@ -17,7 +19,7 @@ import {dataRequestTemplate} from '../../Models/dataRequest.model';
   providers: [getDataService, setDataService]})
 @Injectable()
 export class Expenditure {
-  budgetFields: Array<Object> = [];
+  _datadump = datadump.client.expenditure;
   clientPartnerJoint: Array<string> = ["Client", "Partner", "Joint"];
   addNew: budgetItemClass = new budgetItemClass();
   _save: setDataService;
@@ -27,47 +29,16 @@ export class Expenditure {
   payFrequencyList: Array<string> = [];
   _stringKeyConverters = stringKeyConverters;
   testObs: Observable<Array<Object>> = new Observable<Array<Object>>();
-  total: number = 0;
-  getKeyData(){
-    var conn = new XMLHttpRequest();
-    conn.open("GET", "./app/ConfigFiles/keyToTextConversion.json", true);
-    conn.onload = (()=>{
-      var payFrequencyObject = JSON.parse(conn.response)["data"]["income"]["payFrequency"];
-      for(var g in payFrequencyObject){
-        this.payFrequencyList.push(payFrequencyObject[g]);
-      }
-    })
-    conn.onerror = (()=>{
-      throw "Failed to get income frequency list";
-    })
-    conn.send();
-  }  
+  total: number = 0; 
   removeFromBudgetList(itemIndex: number){
     datadump.client.expenditure.splice(itemIndex, 1); 
     this.__save.saveClientData().subscribe();
-  }
-  calculateTotal(incomeObjectArray: Array<Object>){
-    var returnTotal: number = 0;
-    for(var incomeObject in incomeObjectArray){
-      returnTotal += incomeObjectArray[incomeObject]["clientFigure"];
-    }
-    this.total = returnTotal;
-    return returnTotal;
   }
   save(saveObject: Object){
     this._save.saveClientData();
   }
   addNewFunc(){ 
     if(this.addNew !== undefined){
-      // var temp: budgetItemClass = new budgetItemClass();
-      // temp.name = this.addNew.name;
-      // temp.defaultValue = 1;
-      // temp.addedByClient = true;
-      // temp.essential = false;
-      // temp.order = this.budgetFields.length - 1;
-      // temp.clientFigure = this.addNew.clientFigure;
-      // temp.clientPartnerOrJoint = this.addNew.
-      // this.budgetFields.push(temp);
       this.addNew.addedByClient = true;
       datadump.client.expenditure.push(this.addNew); 
       this.addNew =  new budgetItemClass();  
@@ -76,32 +47,10 @@ export class Expenditure {
       alert("Add the name of the item you want to add.")
     }
   }
-  budgetArrayToObject(jsonObj, userId: string):Object{
-    var jsonPrepObj = {};
-    jsonPrepObj[userId] = {};
-    for(var x in jsonObj){
-      jsonPrepObj[userId][jsonObj[x].name] = jsonObj[x];
-    }
-    return jsonPrepObj;
-  }
-  processReturnedObject(arr: Object){
-    var tempArray: Array<Object> = [];
-    for(var i in arr){        
-      tempArray.push(arr[i])          
-    }
-    this.budgetFields = tempArray;
-  }
-  getExpenditureDataFromDump(){
-    this.budgetFields.length = 0;
-    this.budgetFields = datadump.client.expenditure;
-  }
 constructor(private __get: getDataService, private __save: setDataService)
   {
     this._get = __get;
-    this._save = __save
-    this.getKeyData();
-    if(datadump['clientLoaded']){
-      this.getExpenditureDataFromDump();
-    }
+    this._save = __save;
+    this.payFrequencyList = payFrequencyList;
   }
 }

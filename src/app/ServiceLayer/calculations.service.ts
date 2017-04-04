@@ -37,6 +37,7 @@ export class calculations{
         var expenditure: number = calculations.calculateTotalExpenditure(datadump.client.expenditure);
         return income - expenditure;
     }
+    
     constructor(){
 
     }

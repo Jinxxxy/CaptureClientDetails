@@ -10,6 +10,12 @@
     float:left;
     background-color: black;
 }
+.card{
+    border: 1px solid grey;
+    border-radius: 5px/5px;
+    box-shadow: 5px 2.5px 2.5px grey;
+    padding: 5px;
+}
 .menu{
     background-color: black !important;
     color: lightgrey !important;
@@ -21,6 +27,7 @@
     right:0px;
     float:right;
     overflow: scroll;    
+    display: none;
 }
 .workItem{
     border: 2px solid darkgrey;
@@ -41,6 +48,8 @@
     top: 0px;
     background-color: grey;
     opacity: 0.75;
+    z-index: 1;
+    display: none;
 }
 .crom{
     width: 100%;

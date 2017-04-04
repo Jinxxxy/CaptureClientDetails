@@ -1,23 +1,28 @@
 <h3>
     {{title}}
 </h3>
-<h6>Client Reference: </h6>
-<div *ngIf="_datadump.clientReference !== null">
-    {{_datadump.clientReference}}
+<div class="load-existing-client-div">
+    <h6>Client Reference: </h6>
+
+    <div *ngIf="_datadump.clientReference !== null">
+        {{_datadump.clientReference}}
+    </div>
+    <div *ngIf="!_datadump.clientLoaded">
+        <input type="number" class="u-full-width" [(ngModel)]="_clientId">
+        <input type="button" value="Load Client" #clientRef (click)="loadClient(_clientId)" class="button-primary">
+    </div>
 </div>
-<div *ngIf="!_datadump.clientLoaded">
-    <input type="number" class="u-full-width" [(ngModel)]="_clientId">
-    <input type="button" value="Load Client" #clientRef (click)="loadClient(_clientId)" class="button-primary">
-</div>
-<div *ngIf="!_datadump.clientLoaded">
+<br><div *ngIf="!_datadump.clientLoaded">Or</div><br>
+<div *ngIf="!_datadump.clientLoaded" class="start-new-client-div">
     Or Start a new client:<br>
-    <input type=button value="Start new client" (click)="scaffoldNewClient('2000004')">
+    <input type="button" class="button-primary" value="Start new client" (click)="scaffoldNewClient('2000004')">
 </div>
-<div *ngIf="_datadump.clientLoaded">
+<div class="card" *ngIf="_datadump.clientLoaded">
     <h3>Summary</h3>
     <div><h5>Total Income</h5> <div class="label">£{{_calculations.calculateTotalIncome(_datadump.client.income)}}</div></div>
     <div><h5>Total Expenditure</h5> <div class="label">£{{_calculations.calculateTotalExpenditure(_datadump.client.expenditure)}}</div></div>
     <div><h5>Total Debt Level </h5> <div class="label">£{{_calculations.calculateTotalDebtLevel(_datadump.client.debts)}}</div></div>
     <div><h5>Surplus Amount </h5> <div class="label">£{{_calculations.calculateSurplus()}}    
 </div>
+
 

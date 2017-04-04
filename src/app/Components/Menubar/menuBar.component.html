@@ -11,6 +11,7 @@
         <a class="button menu" *ngIf="_datadump['clientLoaded'] || i.name == 'Home'" [routerLink]="i.path">{{i.name}}</a>
     </div> 
 </div>
+<input type="button" *ngIf="_datadump['clientLoaded']" [routerLink]="home" (click)="_resetApp()" value="Reset Application">
 <div class="outputconsole">
       {{outputFunc() | json}}
 </div>

@@ -8,6 +8,8 @@ import {Response} from '@angular/http'
 import {dataRequestTemplate} from '../../Models/dataRequest.model'
 import {getDataService} from '../../ServiceLayer/getData.service'
 import {setDataService} from '../../ServiceLayer/setData'
+import {emptyDataModel} from '../../Models/emptyDataModel.model'
+import {MessageScreenComponent} from '../message-screen/message-screen.component'
 
 
 @Component({
@@ -30,44 +32,34 @@ export class MenuBar {
     _datadump = datadump;
     private outputFunc():Object{
     return datadump.changed;
-  }
+    }
+    private _resetApp(_reset = this.resetApplication){
+        MessageScreenComponent.options(
+            "Are you sure you want to reset the application?", 
+            [
+                {
+                    name: "Go Ahead",
+                    _function: _reset
+                },
+                {
+                    name: "Not Right Now",
+                    _function: MessageScreenComponent.resetMessageCentre
+                }
+            ]
+        )
+    }
+    private resetApplication(){
+        console.log("resettingApplication");
+        datadump.clientLoaded = false;
+        datadump.clientReference = null;
+        datadump.client = emptyDataModel.client;
+        MessageScreenComponent.resetMessageCentre();
+    }
     private filterPermissionList(inputVal: number){
         return inputVal < this.userPermissionLevel;
         
     }
-    getUserDetails(){
-        var requestObject: dataRequestTemplate = new dataRequestTemplate(
-        "user",
-        this._userId,
-        "UserData",
-        false
 
-        );
-        const _getUserDetails: Observable<Response> = this.gd.getRequestJSON(
-        requestObject
-        );
-        var outputObject = _getUserDetails.map(
-            (returnedObject: Response)=>{
-                var parsedObject: Object = returnedObject.json();
-                console.log(parsedObject);
-                if(parsedObject[0]!== undefined){
-                    var userObject: Object = parsedObject[0];
-                    console.log(userObject["userId"])
-                    datadump.userId = userObject["userId"]; 
-                    console.log(parsedObject)
-                    datadump.user = userObject;
-                    datadump.userLoaded = true;
-                } else if(parsedObject["error"]!== undefined){
-                    var errorObject = returnedObject.json()
-                    alert(errorObject.errorMessage + " for " + errorObject.requestType);
-
-                } else {
-                    alert("COULDNT COMPLETE REQUEST")
-                };
-
-            }
-        ).subscribe();
-    }
     
     private getJson(){
 
@@ -85,6 +77,7 @@ export class MenuBar {
                     if(JsonConfig[i].permissionLevelRequired <= this.userPermissionLevel)
                     {                    
                         this.linksMenu.push(JsonConfig[i])
+                        console.log(this.linksMenu)
                     }         
                 }
             }
@@ -105,14 +98,14 @@ export class MenuBar {
         this._router.events.forEach((event)=>{
             if(event instanceof NavigationStart){
                 if(this._datadump.userLoaded && this._datadump.clientLoaded){
-                    console.log(event)
                     console.log("Mapped event is now working!")
-                    __setDataService.saveClientData();
-                    __setDataService.saveUserData();
+                    __setDataService.saveClientData().subscribe();
+                    __setDataService.saveUserData().subscribe();
                 }
             }
             
         })
+        MessageScreenComponent._visible = true;
     }
 }
 

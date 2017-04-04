@@ -19,8 +19,26 @@
     background-color: grey;
     opacity: 0.75;
 }
+.card{
+    border: 1px solid grey;
+    border-radius: 5px/5px;
+    box-shadow: 5px 2.5px 2.5px grey;
+    padding: 5px;
+}
 .crom{
     width: 100%;
     background-color: grey;
     opacity: 1;
+}
+.load-existing-client-div{
+    border: 1px solid grey;
+    border-radius: 5px/5px;
+    box-shadow: 5px 2.5px 2.5px grey;
+    padding: 5px;
+}
+.start-new-client-div{
+    border: 1px solid grey;
+    border-radius: 5px/5px;
+    box-shadow: 5px 2.5px 2.5px grey;
+    padding: 5px;
 }

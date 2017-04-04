@@ -1,22 +1,22 @@
 <h3>Income</h3>
-<table class="incomeTable">
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Amount
-        </th>
-        <th>
-            Every
-        </th>
-        <th>
-            For
-        </th>
-        <th>
-            Get rid?
-        </th>
-    </tr>
+<table class="incomeTable card">    
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Amount
+            </th>
+            <th>
+                Every
+            </th>
+            <th>
+                For
+            </th>
+            <th>
+                Get rid?
+            </th>
+        </tr>
     <tr *ngFor="let bf of incomeBudgetFields">
         <td>
             <input type="text" placeholder="Name" [(ngModel)]="bf.name">
@@ -26,7 +26,7 @@
         </td>
         <td>
             <select class="u-half-width"  [(ngModel)]="bf.frequencyString" value="bf.clientPartnerOrJoint">
-                <option class="u-half-width" *ngFor="let opt of payFrequencyList" [selected]="bf.frequencyString === opt">
+                <option class="u-half-width" *ngFor="let opt of _payFrequencyList" [selected]="bf.frequencyString === opt">
                     {{opt}}
                 </option>
             </select>
@@ -43,22 +43,12 @@
                 <input type="button" class="button-primary" value="Delete" (click)="removeFromBudgetList(incomeBudgetFields.indexOf(bf))">        
             </div>
         </td>
-    </tr>
-    <tr class="spacerRow">        
         <td>
-        </td>
-        <td>
-        </td>
-        <td>
-        </td>
-        <td>
-        </td>
-        <td>
+            <input type="number" value="{{_convert.convertToMonthly(bf.frequencyString, bf.clientFigure)}}" placeholder="Monthly figure...">
         </td>
     </tr>
     <tr class="spacerRow">        
         <td>
-            Add a new item: 
         </td>
         <td>
         </td>
@@ -68,6 +58,26 @@
         </td>
         <td>
         </td>
+    </tr>
+</table>
+<h3>Add a new item: </h3>
+<table class="incomeTable card">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>
+            Every
+        </th>
+        <th>
+            For
+        </th>
+        <th>
+            Get rid?
+        </th>
     </tr>
     <tr>
         <td>
@@ -93,6 +103,7 @@
         <td>
             <input type="button" class="button-primary" value="Add" name="addNewButton" (click)="addNewFunc()">
         </td>
+        
     </tr>
 </table>
 <input type="button" class="button-primary" value="Save data" name="saveButton" (click) = "save()">

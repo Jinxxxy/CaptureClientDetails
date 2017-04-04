@@ -6,11 +6,6 @@ import {datadump} from '../ServiceLayer/dataStore';
 import {Injectable} from '@angular/core';
 
 
-// var itemNameFolderFinder = {
-//     "income":"clientData",
-//     "expenditure":"clientData",
-//     "UserData": "UserData"
-// }
 @Injectable()
 export class setDataService{
     private _http: Http; 
@@ -18,8 +13,7 @@ export class setDataService{
         var postClientTemplate: dataRequestTemplate = new dataRequestTemplate(
             "client",
             datadump.clientReference
-        );
-                
+        );                
         postClientTemplate.passedData = datadump.client;
         postClientTemplate.crud = crudtype;
         var returnObservable: Observable<Object> = this._http.post(
@@ -30,6 +24,7 @@ export class setDataService{
     })
     saveUserData: Function = ((): Observable<Object>=>{
         console.log('Saving...')
+        
         var postClientTemplate: dataRequestTemplate = new dataRequestTemplate(
             "user",
             datadump.clientReference

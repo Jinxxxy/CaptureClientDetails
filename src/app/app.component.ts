@@ -4,6 +4,7 @@ import {generalHelpers} from './HelperMethods/GeneralHelper'
 import {Expenditure} from './Components/Expenditure/expenditure.component'
 import {Income} from './Components/Income/income.component'
 import {RouterModule, Routes} from '@angular/router'
+import {MessageScreenComponent} from './Components/message-screen/message-screen.component'
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,9 @@ import {RouterModule, Routes} from '@angular/router'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Testing SSD Speed!';  
-  
-  
+  _ms = MessageScreenComponent;
+  title = 'Testing SSD Speed!';
+  constructor(){
+
+  }  
 }

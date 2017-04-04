@@ -1,0 +1,8 @@
+<div class="messageCenter">
+  <div class="messageContainer">
+    <label class="nc-message">{{getInformationMessage()}}</label>
+    <input type="number" *ngIf="getNumberInputStatus()" #numberInput [ngModel]="setNumInput(numberInput.value)">
+    <div class="nc-button-holder"><input type="button" class="button-primary nc-button" *ngFor="let opt of getOptionsArray()" value="{{opt.name}}" (click)="opt._function()"></div>
+  </div>
+</div>
+<div class="mc-background"></div>

@@ -9,6 +9,9 @@ import {Response} from '@angular/http'
 import {datadump} from '../../ServiceLayer/dataStore';
 import {stringKeyConverters} from '../../HelperMethods/keyToStringConverters'
 import {cpjList} from '../../ConfigFiles/clientPartnerOrJoint';
+import {convertFrequencyValues} from '../../HelperMethods/convertPayFrequencies'
+import {payFrequencyList} from '../../ConfigFiles/payFrequencyList'
+
 
 @Component({
   selector: 'incomeForm',
@@ -22,28 +25,15 @@ export class Income {
    addNew: budgetItemClass = new budgetItemClass();
    _cpjList = cpjList;
    _save: setDataService;
-   jointBudget: boolean = false;
-   payFrequencyList = [];
-   frequencyInput: string = "";
-   _clientId: number = 2000001;
-   _newFrequencyString = "";
-   _clientOrPartner = "";
+   _payFrequencyList: Object;
    _newBudgetItem:budgetItemClass = new budgetItemClass();
    gd: getDataService; 
+   _convert: convertFrequencyValues;
   _clientLoaded: boolean = datadump.clientLoaded;
   removeFromBudgetList(itemIndex: number){
     datadump.client.income.splice(itemIndex, 1);
     this.incomeBudgetFields.splice(itemIndex, 1);
     this.__save.saveClientData().subscribe();
-  }
-  checkForChanges(_name: string, _value: number, _freq: string, _for: string){
-
-  }
-  save(saveObject: Object){    
-    var saveResponse: Observable<Object> = this._save.saveClientData();
-    saveResponse.map((response: Object)=>{
-      
-    })
   }
   addNewFunc(){
     if(this.addNew !== undefined){
@@ -59,104 +49,16 @@ export class Income {
       temp.clientPartnerOrJoint = this._newBudgetItem["clientPartnerOrJoint"];
       datadump.client.income.push(temp);
       this._save.saveClientData().subscribe();
-      this.loadIncomeData();        
     } else {
       alert("Add the name of the field you want to add.")
     }
-  }
-  addFrequencyString(objectToAddItemTo: Object): Object{
-    var frequencyKey:number = objectToAddItemTo["frequency"];
-    var frequencyString = stringKeyConverters.convertFrequencyKeyToString(frequencyKey);
-    objectToAddItemTo["frequencyString"] = frequencyString;
-    return objectToAddItemTo;
-  }
-  loadIncomeData(){
-    if(datadump["clientLoaded"] === true){   
-      var f = datadump.client.income;
-      var sortedObject = this.putItemsIntoArray(f);
-      this.incomeBudgetFields = sortedObject;
-    } else {
-
-    }
-  }
-  sortIncomeObjectToArray(incomeObject: Object): Array<Object>{
-    var returnArray = [];
-    var toReturn = returnArray.concat(incomeObject["client"]).concat(incomeObject["partner"]).concat(incomeObject["joint"]);
-    return toReturn;
-  }
-  isJointBudget(){
-      var returnValue: boolean = false;
-      var conn = new XMLHttpRequest();
-      conn.open("get", "./app/ClientFiles/" + this._clientId + ".json", true);
-      conn.onload = (()=>{
-          var dataObject = JSON.parse(conn.response).data.personalDetails;
-          this.jointBudget = dataObject["jointBudget"];
-      })
-      conn.onerror = (()=>{
-          console.log(conn.response);
-      })
-      conn.send();
-  }
-  getArrayFromObject(arrayOfObject: Object): Array<Object>{
-    var returnArray = [];
-    for(var oa in arrayOfObject){
-      var tempArrayObject = arrayOfObject[oa];
-      returnArray.push(tempArrayObject);      
-    }
-    return returnArray
-  }
-  putItemsIntoArray(objectOfArrays:Object):Array<Object>{
-    var returnArray = [];
-    for(var _array in objectOfArrays){
-        returnArray.push(this.addFrequencyString(objectOfArrays[_array]));      
-    }
-    return returnArray;
   }  
-  filterAndSeparateIncomeItems(objectOfArraysToSort: Object):Object{
-    var client = [];
-    var partner = [];
-    var joint = [];
-    
-    for(var x in objectOfArraysToSort){
-      if(objectOfArraysToSort[x].clientPartnerOrJoint === "client"){
-        client.push(this.getArrayFromObject(objectOfArraysToSort[x]));
-      }
-      else if (objectOfArraysToSort[x].clientPartnerOrJoint === "partner"){
-        partner.push(this.getArrayFromObject(objectOfArraysToSort[x]));
-      }
-      else {
-        joint.push(this.getArrayFromObject(objectOfArraysToSort[x]));
-      }
-    }
-    var returnObj = [
-        {"client": client}, 
-        {"partner": partner}, 
-        {"joint": joint}
-      ];
-      return returnObj;
-  }  
-  getKeyData(){
-    var conn = new XMLHttpRequest();
-    conn.open("GET", "./app/ConfigFiles/keyToTextConversion.json", true);
-    conn.onload = (()=>{
-      var payFrequencyObject = JSON.parse(conn.response)["data"]["income"]["payFrequency"];
-      for(var g in payFrequencyObject){
-        this.payFrequencyList.push(payFrequencyObject[g]);
-      }
-    })
-    conn.onerror = (()=>{
-      throw "Failed to get income frequency list";
-    })
-    conn.send();
-  }
   constructor(private __getData: getDataService, private __save: setDataService)
   {    
     this._save = __save;
     this.gd = __getData;
-    //this.isJointBudget();
-    this.getKeyData();
-    if(datadump['clientLoaded']){      
-      this.loadIncomeData();
-    }    
+    this._payFrequencyList = payFrequencyList
+    this._convert = convertFrequencyValues;
+
   }
 }

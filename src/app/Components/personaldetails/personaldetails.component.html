@@ -1,4 +1,4 @@
-<table>
+<table class="card">
     <tr>
         <th colspan="2">
             <h3>Who are you?</h3>
@@ -9,7 +9,7 @@
             <label>First Name: </label>
         </td>
         <td>
-            <input type="text" [(ngModel)]="newClient.firstName">
+            <input type="text" [(ngModel)]="_clientDetails.firstName">
         </td>
     </tr>
         <tr>
@@ -17,7 +17,7 @@
             <label>Middle Name(s): </label>
         </td>
         <td>
-            <input type="text" [(ngModel)]="newClient.middleNames">
+            <input type="text" [(ngModel)]="_clientDetails.middleNames">
         </td>
     </tr>
         <tr>
@@ -25,7 +25,7 @@
             <label>Surname: </label>
         </td>
         <td>
-            <input type="text" [(ngModel)]="newClient.surname">
+            <input type="text" [(ngModel)]="_clientDetails.surname">
         </td>          
     </tr>
     <tr>
@@ -33,11 +33,11 @@
             <label>Date of birth: </label>
         </td>
         <td>
-            <input type="date" [(ngModel)]="newClient.dateOfBirth">
+            <input type="date" #tt (change)="tesFunc(44)" [value]="createDateForInput(_clientDetails.dateOfBirth)">
         </td>  
     </tr>  
 </table>
-<table>  
+<table class="card">  
     <tr>
         <th colspan="2">
             <h3>Phone Numbers?</h3>
@@ -50,7 +50,7 @@
             </label>
         </td>
         <td>
-            <input type="tel" [(ngModel)]="newClient.homePhone">
+            <input type="tel" [(ngModel)]="_clientDetails.homePhone">
         </td>        
     </tr>
     <tr>
@@ -60,7 +60,7 @@
             </label>            
         </td>
         <td>
-            <input type="tel" [(ngModel)]="newClient.workPhone">
+            <input type="tel" [(ngModel)]="_clientDetails.workPhone">
         </td>
     </tr>
     <tr>
@@ -68,11 +68,11 @@
             <label> Mobile Phone: </label>
         </td>
         <td>
-            <input type="tel" [(ngModel)]="newClient.mobilePhone">
+            <input type="tel" [(ngModel)]="_clientDetails.mobilePhone">
         </td>
     </tr>
 </table>
-<table>
+<table class="card">
     <tr>
         <th colspan="2">
             <h3>Address Details: </h3>
@@ -83,7 +83,7 @@
             <label>Address Line 1: </label>
         </td>
         <td>
-            <input type="text" [(ngModel)]="newClient.addressLine1">
+            <input type="text" [(ngModel)]="_clientDetails.addressLine1">
         </td>
     </tr>
     <tr>
@@ -91,7 +91,7 @@
             <label>Address Line 2: </label>
         </td>
         <td>
-            <input type="text" [(ngModel)]="newClient.addressLine2">
+            <input type="text" [(ngModel)]="_clientDetails.addressLine2">
         </td>
     </tr>
     <tr>
@@ -99,7 +99,7 @@
             <label>Town / City: </label>
         </td>
         <td>
-            <input type="text" [(ngModel)]="newClient.townCity">
+            <input type="text" [(ngModel)]="_clientDetails.townCity">
         </td>  
     </tr>
     <tr>
@@ -107,7 +107,7 @@
             <label>Country: </label>
         </td>
         <td>
-            <input type="text" [(ngModel)]="newClient.country">
+            <input type="text" [(ngModel)]="_clientDetails.country">
         </td>
     </tr>
     <tr>        
@@ -115,7 +115,7 @@
             <label>Postcode: </label>
         </td>
         <td>
-            <input type="text" [(ngModel)]="newClient.postCode">
+            <input type="text" [(ngModel)]="_clientDetails.postCode">
         </td>
     </tr>
 </table>
